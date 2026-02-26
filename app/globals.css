@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+/* Custom scrollbar styling - almost invisible */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Light mode scrollbar */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(27, 73, 101, 0.15);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 168, 76, 0.4);
+}
+
+/* Dark mode scrollbar */
+[data-theme='dark'] ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: rgba(91, 163, 207, 0.2);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(232, 201, 106, 0.4);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(27, 73, 101, 0.15) transparent;
+}
+
+[data-theme='dark'] * {
+  scrollbar-color: rgba(91, 163, 207, 0.2) transparent;
+}
