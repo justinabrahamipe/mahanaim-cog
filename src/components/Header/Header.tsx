@@ -72,7 +72,7 @@ export default function Header() {
 
   return (
     <>
-      <AppBar position="sticky" sx={{ backgroundColor: 'primary.main' }}>
+      <AppBar position="sticky" sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#1A0505' : '#C46A6A' }}>
         <Toolbar>
           <IconButton
             color="inherit"

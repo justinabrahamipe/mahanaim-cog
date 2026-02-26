@@ -47,6 +47,12 @@ export const pageMetadata: Record<string, PageMeta> = {
       'View photos and memories from Mahanaim Church of God Manchester.',
     path: '/gallery',
   },
+  youth: {
+    title: 'Youth | Mahanaim Church of God Manchester',
+    description:
+      'Mahanaim Youth - Follow our youth ministry and watch the latest reels and content.',
+    path: '/youth',
+  },
   churches: {
     title: 'Our Churches | Mahanaim Church of God Manchester',
     description:

@@ -5,22 +5,22 @@ export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#5BA3CF',
-      light: '#8BC4E8',
-      dark: '#3A7BA8',
+      main: '#D4908F',
+      light: '#E0ADAC',
+      dark: '#A04E4E',
     },
     secondary: {
-      main: '#E8C96A',
-      light: '#F0DC94',
-      dark: '#C9A84C',
+      main: '#C9A84C',
+      light: '#D4B96E',
+      dark: '#A08530',
     },
     background: {
-      default: '#0F1419',
-      paper: '#1A2332',
+      default: '#120A0A',
+      paper: '#1E1414',
     },
     text: {
-      primary: '#E8E6E1',
-      secondary: '#9BA4B0',
+      primary: '#F5F0EF',
+      secondary: '#C4B5B2',
     },
   },
   typography: {

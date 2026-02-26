@@ -25,7 +25,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(27, 73, 101, 0.15);
+  background: rgba(74, 14, 14, 0.2);
   border-radius: 3px;
   transition: background 0.3s ease;
 }
@@ -40,7 +40,7 @@ body {
 }
 
 [data-theme='dark'] ::-webkit-scrollbar-thumb {
-  background: rgba(91, 163, 207, 0.2);
+  background: rgba(196, 106, 106, 0.25);
   border-radius: 3px;
   transition: background 0.3s ease;
 }
@@ -52,9 +52,9 @@ body {
 /* Firefox scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(27, 73, 101, 0.15) transparent;
+  scrollbar-color: rgba(74, 14, 14, 0.2) transparent;
 }
 
 [data-theme='dark'] * {
-  scrollbar-color: rgba(91, 163, 207, 0.2) transparent;
+  scrollbar-color: rgba(196, 106, 106, 0.25) transparent;
 }

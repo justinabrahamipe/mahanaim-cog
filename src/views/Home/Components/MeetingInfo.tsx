@@ -62,8 +62,8 @@ export default function MeetingInfo() {
                   transform: 'translateY(-8px)',
                   boxShadow: (theme) =>
                     theme.palette.mode === 'light'
-                      ? '0 12px 24px rgba(27, 73, 101, 0.12)'
-                      : '0 12px 24px rgba(91, 163, 207, 0.12)',
+                      ? '0 12px 24px rgba(74, 14, 14, 0.15)'
+                      : '0 12px 24px rgba(196, 106, 106, 0.15)',
                   borderColor: 'primary.main',
                 },
               }}
