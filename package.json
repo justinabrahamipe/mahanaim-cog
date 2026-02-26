@@ -15,7 +15,7 @@
     "@mui/material": "^7.3.5",
     "daisyui": "^5.0.0",
     "framer-motion": "^12.31.0",
-    "next": "15.2.1",
+    "next": "15.2.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "yet-another-react-lightbox": "^3.28.0"
