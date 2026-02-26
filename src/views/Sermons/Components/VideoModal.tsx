@@ -99,7 +99,7 @@ export default function VideoModal({ video, open, onClose, videos, onSelectVideo
                 }}
               >
                 <Typography variant="subtitle2" sx={{ px: 1, py: 0.5, fontWeight: 600 }}>
-                  More Videos
+                  More
                 </Typography>
                 {otherVideos.map((v) => (
                   <Box

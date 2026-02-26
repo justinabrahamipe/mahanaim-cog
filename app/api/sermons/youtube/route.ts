@@ -6,7 +6,7 @@ import type {
 } from '@/types/youtube';
 
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
-const YOUTUBE_PLAYLIST_ID = process.env.YOUTUBE_PLAYLIST_ID;
+const YOUTUBE_CHANNEL_HANDLE = process.env.YOUTUBE_CHANNEL_HANDLE;
 
 let cache: { videos: YouTubeVideo[]; timestamp: number } | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
@@ -20,14 +20,31 @@ function parseISO8601Duration(duration: string): number {
   return hours * 3600 + minutes * 60 + seconds;
 }
 
-async function fetchAllPlaylistItems(): Promise<YouTubePlaylistItemResponse['items']> {
+async function getUploadsPlaylistId(): Promise<string> {
+  const url = new URL('https://www.googleapis.com/youtube/v3/channels');
+  url.searchParams.set('part', 'contentDetails');
+  url.searchParams.set('forHandle', YOUTUBE_CHANNEL_HANDLE!);
+  url.searchParams.set('key', YOUTUBE_API_KEY!);
+
+  const res = await fetch(url.toString());
+  if (!res.ok) throw new Error(`YouTube Channels API error: ${res.status}`);
+  const data = await res.json();
+
+  if (!data.items || data.items.length === 0) {
+    throw new Error('Channel not found');
+  }
+
+  return data.items[0].contentDetails.relatedPlaylists.uploads;
+}
+
+async function fetchAllPlaylistItems(playlistId: string): Promise<YouTubePlaylistItemResponse['items']> {
   const items: YouTubePlaylistItemResponse['items'] = [];
   let nextPageToken: string | undefined;
 
   do {
     const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems');
     url.searchParams.set('part', 'snippet');
-    url.searchParams.set('playlistId', YOUTUBE_PLAYLIST_ID!);
+    url.searchParams.set('playlistId', playlistId);
     url.searchParams.set('maxResults', '50');
     url.searchParams.set('key', YOUTUBE_API_KEY!);
     if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
@@ -42,10 +59,9 @@ async function fetchAllPlaylistItems(): Promise<YouTubePlaylistItemResponse['ite
   return items;
 }
 
-async function fetchVideoDetails(videoIds: string[]): Promise<Map<string, { duration: number; tags: string[] }>> {
-  const details = new Map<string, { duration: number; tags: string[] }>();
+async function fetchVideoDetails(videoIds: string[]): Promise<Map<string, { duration: number; tags: string[]; isLive: string }>> {
+  const details = new Map<string, { duration: number; tags: string[]; isLive: string }>();
 
-  // Process in batches of 50
   for (let i = 0; i < videoIds.length; i += 50) {
     const batch = videoIds.slice(i, i + 50);
     const url = new URL('https://www.googleapis.com/youtube/v3/videos');
@@ -55,12 +71,13 @@ async function fetchVideoDetails(videoIds: string[]): Promise<Map<string, { dura
 
     const res = await fetch(url.toString());
     if (!res.ok) throw new Error(`YouTube API error: ${res.status}`);
-    const data: YouTubeVideoDetailResponse = await res.json();
+    const data = await res.json();
 
     for (const item of data.items) {
       details.set(item.id, {
         duration: parseISO8601Duration(item.contentDetails.duration),
-        tags: item.snippet.tags || [],
+        tags: item.snippet?.tags || [],
+        isLive: item.snippet?.liveBroadcastContent || 'none',
       });
     }
   }
@@ -69,20 +86,20 @@ async function fetchVideoDetails(videoIds: string[]): Promise<Map<string, { dura
 }
 
 export async function GET() {
-  if (!YOUTUBE_API_KEY || !YOUTUBE_PLAYLIST_ID) {
+  if (!YOUTUBE_API_KEY || !YOUTUBE_CHANNEL_HANDLE) {
     return NextResponse.json(
-      { videos: [], cached: false, error: 'YouTube API key or playlist ID not configured' },
+      { videos: [], cached: false, error: 'YouTube API key or channel handle not configured' },
       { status: 200 }
     );
   }
 
-  // Check cache
   if (cache && Date.now() - cache.timestamp < CACHE_DURATION) {
     return NextResponse.json({ videos: cache.videos, cached: true });
   }
 
   try {
-    const playlistItems = await fetchAllPlaylistItems();
+    const uploadsPlaylistId = await getUploadsPlaylistId();
+    const playlistItems = await fetchAllPlaylistItems(uploadsPlaylistId);
     const videoIds = playlistItems.map((item) => item.snippet.resourceId.videoId);
     const videoDetails = await fetchVideoDetails(videoIds);
 
@@ -94,10 +111,12 @@ export async function GET() {
         const duration = details?.duration || 0;
         const tags = details?.tags || [];
 
+        // YouTube Shorts are vertical videos up to 60 seconds, or explicitly tagged
         const isShort =
-          duration <= 180 ||
+          duration <= 60 ||
           tags.some((tag) => tag.toLowerCase().includes('shorts')) ||
-          item.snippet.title.toLowerCase().includes('#shorts');
+          item.snippet.title.toLowerCase().includes('#shorts') ||
+          item.snippet.description.toLowerCase().includes('#shorts');
 
         return {
           id: videoId,
@@ -119,7 +138,6 @@ export async function GET() {
     return NextResponse.json({ videos, cached: false });
   } catch (error) {
     console.error('YouTube API error:', error);
-    // Return cached data if available, even if expired
     if (cache) {
       return NextResponse.json({ videos: cache.videos, cached: true });
     }

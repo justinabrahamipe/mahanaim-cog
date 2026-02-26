@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Page from '@/components/Page/Page';
 import PageBanner from '@/components/Page/Components/PageBanner';
@@ -27,6 +28,7 @@ export default function Sermons() {
   const [modalOpen, setModalOpen] = useState(false);
   const [shortsViewerOpen, setShortsViewerOpen] = useState(false);
   const [currentShortIndex, setCurrentShortIndex] = useState(0);
+  const [showAllShorts, setShowAllShorts] = useState(false);
 
   useEffect(() => {
     async function fetchSermons() {
@@ -120,19 +122,31 @@ export default function Sermons() {
                       gap: 2,
                     }}
                   >
-                    {shorts.map((video) => (
+                    {(showAllShorts ? shorts : shorts.slice(0, 12)).map((video) => (
                       <ShortCard key={video.videoId} video={video} onClick={handleShortClick} />
                     ))}
                   </Box>
+                  {shorts.length > 12 && (
+                    <Box sx={{ textAlign: 'center', mt: 3 }}>
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => setShowAllShorts(!showAllShorts)}
+                        sx={{ fontWeight: 600 }}
+                      >
+                        {showAllShorts ? 'Show Less' : `View All Shorts (${shorts.length})`}
+                      </Button>
+                    </Box>
+                  )}
                 </Box>
               )}
 
-              {/* Sermons section */}
+              {/* Videos section */}
               <Typography
                 variant="h5"
                 sx={{ fontWeight: 700, mb: 3, color: 'primary.main' }}
               >
-                Sermons
+                Videos
               </Typography>
 
               {/* Search and sort */}
