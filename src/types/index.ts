@@ -72,6 +72,16 @@ export interface SisterChurch {
   contact?: ChurchContact;
 }
 
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  description: string;
+  location: string;
+  start: string;
+  end: string;
+  allDay: boolean;
+}
+
 export interface GalleryImage {
   src: string;
   title: string;

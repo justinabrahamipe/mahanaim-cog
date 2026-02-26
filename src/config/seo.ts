@@ -35,6 +35,12 @@ export const pageMetadata: Record<string, PageMeta> = {
       'Watch sermons and messages from Mahanaim Church of God Manchester.',
     path: '/sermons',
   },
+  events: {
+    title: 'Events | Mahanaim Church of God Manchester',
+    description:
+      'View upcoming events and programmes at Mahanaim Church of God Manchester.',
+    path: '/events',
+  },
   gallery: {
     title: 'Gallery | Mahanaim Church of God Manchester',
     description:

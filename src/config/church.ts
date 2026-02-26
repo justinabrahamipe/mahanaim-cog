@@ -64,6 +64,7 @@ export const navItems: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about' },
   { label: 'Messages', href: '/sermons' },
+  { label: 'Events', href: '/events' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Churches', href: '/churches' },
   { label: 'Leadership', href: '/leadership' },
