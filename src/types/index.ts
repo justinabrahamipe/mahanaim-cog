@@ -47,6 +47,31 @@ export interface ContactMethod {
   colorTheme: 'primary' | 'secondary';
 }
 
+export interface ChurchContact {
+  phone?: string;
+  website?: string;
+  instagram?: string;
+  facebook?: string;
+  whatsapp?: string;
+}
+
+export interface PastorInfo {
+  name: string;
+  phone?: string;
+  whatsapp?: string;
+}
+
+export interface SisterChurch {
+  name: string;
+  location: string;
+  pastor: string;
+  pastorPhone?: string;
+  pastorWhatsapp?: string;
+  associatePastors?: PastorInfo[];
+  isMotherChurch?: boolean;
+  contact?: ChurchContact;
+}
+
 export interface GalleryImage {
   src: string;
   title: string;

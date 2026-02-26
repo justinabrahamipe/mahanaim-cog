@@ -41,6 +41,12 @@ export const pageMetadata: Record<string, PageMeta> = {
       'View photos and memories from Mahanaim Church of God Manchester.',
     path: '/gallery',
   },
+  churches: {
+    title: 'Our Churches | Mahanaim Church of God Manchester',
+    description:
+      'Discover our family of Mahanaim Churches across the UK including Manchester, Telford, Keighley, Burnley, and more.',
+    path: '/churches',
+  },
   leadership: {
     title: 'Leadership | Mahanaim Church of God Manchester',
     description:

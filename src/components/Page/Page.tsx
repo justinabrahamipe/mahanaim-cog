@@ -6,17 +6,42 @@ import Footer from '@/components/Footer/Footer';
 
 interface PageProps {
   children: React.ReactNode;
+  snap?: boolean;
 }
 
-export default function Page({ children }: PageProps) {
+export default function Page({ children, snap }: PageProps) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+        ...(snap && {
+          height: '100vh',
+          overflowY: 'auto',
+          scrollSnapType: 'y mandatory',
+          '& > *': {
+            scrollSnapAlign: 'start',
+          },
+        }),
+      }}
+    >
       <Header />
-      <Box component="main" sx={{ flex: 1 }}>
+      <Box
+        component="main"
+        sx={{
+          flex: 1,
+          ...(snap && {
+            '& > *': {
+              scrollSnapAlign: 'start',
+            },
+          }),
+        }}
+      >
         {children}
       </Box>
       <Footer />
