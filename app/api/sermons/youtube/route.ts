@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import type {
   YouTubeVideo,
   YouTubePlaylistItemResponse,
-  YouTubeVideoDetailResponse,
 } from '@/types/youtube';
 
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;

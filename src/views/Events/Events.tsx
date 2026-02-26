@@ -165,7 +165,6 @@ export default function Events() {
                 const label = getLabel(event.start);
                 const today = isToday(event.start);
                 const dateDisplay = getDateDisplay(event.start, event.end, event.allDay);
-                const multiDay = isMultiDay(event.start, event.end, event.allDay);
                 return (
                   <Card
                     key={event.id}
