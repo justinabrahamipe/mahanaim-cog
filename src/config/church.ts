@@ -61,12 +61,19 @@ export const churchInfo: ChurchInfo = {
 };
 
 export const navItems: NavItem[] = [
-  { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about' },
   { label: 'Messages', href: '/sermons' },
   { label: 'Events', href: '/events' },
   { label: 'Gallery', href: '/gallery' },
-  { label: 'Youth', href: '/youth' },
+  {
+    label: 'Youth',
+    href: '/youth',
+    children: [
+      { label: 'Reels', href: '/youth' },
+      { label: 'Quiz App', href: 'https://www.mahanaimypequiz.com', external: true },
+      { label: 'Magazine', href: '/youth/magazine' },
+    ],
+  },
   { label: 'Churches', href: '/churches' },
   { label: 'Leadership', href: '/leadership' },
   { label: 'Contact', href: '/contact' },

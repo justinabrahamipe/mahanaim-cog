@@ -10,21 +10,20 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Skeleton from '@mui/material/Skeleton';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import QuizIcon from '@mui/icons-material/Quiz';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import Link from 'next/link';
 import Page from '@/components/Page/Page';
 import PageBanner from '@/components/Page/Components/PageBanner';
 import PageTitle from '@/components/Page/Components/PageTitle';
+import { youthQuizUrl } from '@/config/youth';
+import type { YouTubeVideo } from '@/types/youtube';
 
 const INSTAGRAM_HANDLE = 'mahanaim__youth';
 
-interface ReelMeta {
-  url: string;
-  thumbnailUrl: string;
-  title: string;
-}
-
-function ReelCard({ reel }: { reel: ReelMeta }) {
+function ReelCard({ reel }: { reel: YouTubeVideo }) {
   const [loaded, setLoaded] = useState(false);
-  const hasThumbnail = !!reel.thumbnailUrl;
 
   return (
     <Card
@@ -34,13 +33,13 @@ function ReelCard({ reel }: { reel: ReelMeta }) {
         overflow: 'hidden',
         '&:hover': {
           transform: 'translateY(-8px)',
-          borderColor: '#E4405F',
-          boxShadow: '0 12px 24px rgba(228, 64, 95, 0.15)',
+          borderColor: '#FF0000',
+          boxShadow: '0 12px 24px rgba(255, 0, 0, 0.15)',
         },
       }}
     >
       <CardActionArea
-        href={reel.url}
+        href={`https://www.youtube.com/shorts/${reel.videoId}`}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -48,38 +47,33 @@ function ReelCard({ reel }: { reel: ReelMeta }) {
           sx={{
             position: 'relative',
             paddingTop: '177.78%',
-            background: hasThumbnail
-              ? 'action.hover'
-              : 'linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)',
+            background: 'action.hover',
           }}
         >
-          {hasThumbnail && !loaded && (
+          {!loaded && (
             <Skeleton
               variant="rectangular"
               animation="wave"
               sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
             />
           )}
-          {hasThumbnail && (
-            <Box
-              component="img"
-              src={reel.thumbnailUrl}
-              alt={reel.title}
-              loading="lazy"
-              onLoad={() => setLoaded(true)}
-              sx={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                opacity: loaded ? 1 : 0,
-                transition: 'opacity 0.3s ease',
-              }}
-            />
-          )}
-          {/* Center content for no-thumbnail cards */}
+          <Box
+            component="img"
+            src={reel.thumbnailUrl}
+            alt={reel.title}
+            loading="lazy"
+            onLoad={() => setLoaded(true)}
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: loaded ? 1 : 0,
+              transition: 'opacity 0.3s ease',
+            }}
+          />
           <Box
             sx={{
               position: 'absolute',
@@ -88,10 +82,8 @@ function ReelCard({ reel }: { reel: ReelMeta }) {
               right: 0,
               bottom: 0,
               display: 'flex',
-              flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: 1.5,
             }}
           >
             <Box
@@ -108,31 +100,13 @@ function ReelCard({ reel }: { reel: ReelMeta }) {
             >
               <PlayArrowIcon sx={{ fontSize: 36, color: 'white' }} />
             </Box>
-            {!hasThumbnail && reel.title && (
-              <Typography
-                variant="body2"
-                sx={{
-                  color: 'white',
-                  fontWeight: 600,
-                  textAlign: 'center',
-                  px: 2,
-                  textShadow: '0 1px 3px rgba(0,0,0,0.4)',
-                  display: '-webkit-box',
-                  WebkitLineClamp: 3,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden',
-                }}
-              >
-                {reel.title}
-              </Typography>
-            )}
           </Box>
-          {/* Instagram badge */}
+          {/* YouTube badge */}
           <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
-            <InstagramIcon sx={{ color: 'white', fontSize: 24, filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.5))' }} />
+            <YouTubeIcon sx={{ color: 'white', fontSize: 24, filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.5))' }} />
           </Box>
         </Box>
-        {hasThumbnail && reel.title && (
+        {reel.title && (
           <CardContent sx={{ p: 2 }}>
             <Typography
               variant="body2"
@@ -154,7 +128,7 @@ function ReelCard({ reel }: { reel: ReelMeta }) {
 }
 
 export default function Youth() {
-  const [reels, setReels] = useState<ReelMeta[]>([]);
+  const [reels, setReels] = useState<YouTubeVideo[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -181,7 +155,15 @@ export default function Youth() {
 
       <Box sx={{ py: 6, backgroundColor: 'background.default' }}>
         <Container maxWidth="lg">
-          <Box sx={{ textAlign: 'center', mb: 6 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: 2,
+              mb: 6,
+            }}
+          >
             <Button
               variant="contained"
               startIcon={<InstagramIcon />}
@@ -200,6 +182,25 @@ export default function Youth() {
               }}
             >
               Follow @{INSTAGRAM_HANDLE}
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<QuizIcon />}
+              href={youthQuizUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ fontWeight: 600, px: 4, py: 1.5, fontSize: '1rem' }}
+            >
+              Take the Quiz
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<MenuBookIcon />}
+              component={Link}
+              href="/youth/magazine"
+              sx={{ fontWeight: 600, px: 4, py: 1.5, fontSize: '1rem' }}
+            >
+              Read the Magazine
             </Button>
           </Box>
 
@@ -229,17 +230,17 @@ export default function Youth() {
               }}
             >
               {reels.map((reel) => (
-                <ReelCard key={reel.url} reel={reel} />
+                <ReelCard key={reel.videoId} reel={reel} />
               ))}
             </Box>
           ) : (
             <Box sx={{ textAlign: 'center', py: 8 }}>
-              <InstagramIcon sx={{ fontSize: 60, color: 'text.secondary', mb: 2, opacity: 0.5 }} />
+              <YouTubeIcon sx={{ fontSize: 60, color: 'text.secondary', mb: 2, opacity: 0.5 }} />
               <Typography variant="h6" color="text.secondary">
                 Reels coming soon!
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                Follow us on Instagram to see our latest content.
+                Check back soon for our latest videos.
               </Typography>
             </Box>
           )}

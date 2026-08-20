@@ -1,70 +1,92 @@
 import { NextResponse } from 'next/server';
+import type {
+  YouTubeVideo,
+  YouTubePlaylistItemResponse,
+} from '@/types/youtube';
 
-const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
-const YOUTH_SHEET_ID = '1NZFNzdurvh83T-UXe-0UzrAxNeN__iwDy98gjeKuoUQ';
+const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+const YOUTH_YOUTUBE_CHANNEL_HANDLE = process.env.YOUTH_YOUTUBE_CHANNEL_HANDLE;
 
-interface ReelMeta {
-  url: string;
-  thumbnailUrl: string;
-  title: string;
+let cache: { reels: YouTubeVideo[]; timestamp: number } | null = null;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+function parseISO8601Duration(duration: string): number {
+  const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!match) return 0;
+  const hours = parseInt(match[1] || '0', 10);
+  const minutes = parseInt(match[2] || '0', 10);
+  const seconds = parseInt(match[3] || '0', 10);
+  return hours * 3600 + minutes * 60 + seconds;
 }
 
-let cache: { reels: ReelMeta[]; timestamp: number } | null = null;
-const CACHE_DURATION = 5 * 60 * 1000;
+async function getUploadsPlaylistId(): Promise<string> {
+  const url = new URL('https://www.googleapis.com/youtube/v3/channels');
+  url.searchParams.set('part', 'contentDetails');
+  url.searchParams.set('forHandle', YOUTH_YOUTUBE_CHANNEL_HANDLE!);
+  url.searchParams.set('key', YOUTUBE_API_KEY!);
 
-async function scrapeInstagramTitle(reelUrl: string): Promise<string> {
-  try {
-    const res = await fetch(reelUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
-        'Accept': 'text/html',
-        'Accept-Language': 'en-US,en;q=0.9',
-      },
-      signal: AbortSignal.timeout(5000),
-    });
-    if (!res.ok) return '';
-    const html = await res.text();
+  const res = await fetch(url.toString());
+  if (!res.ok) throw new Error(`YouTube Channels API error: ${res.status}`);
+  const data = await res.json();
 
-    // Try og:title first
-    const ogMatch = html.match(/<meta\s+(?:property|name)="og:title"\s+content="([^"]*)"/)
-      || html.match(/content="([^"]*)"\s+(?:property|name)="og:title"/);
-    if (ogMatch?.[1]) {
-      return cleanTitle(ogMatch[1]);
-    }
-
-    // Fallback to <title> tag
-    const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
-    if (titleMatch?.[1]) {
-      return cleanTitle(titleMatch[1]);
-    }
-
-    return '';
-  } catch {
-    return '';
+  if (!data.items || data.items.length === 0) {
+    throw new Error('Channel not found');
   }
+
+  return data.items[0].contentDetails.relatedPlaylists.uploads;
 }
 
-function cleanTitle(raw: string): string {
-  // Decode HTML entities
-  let title = raw
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&#x27;/g, "'")
-    .replace(/&nbsp;/g, ' ');
+async function fetchAllPlaylistItems(playlistId: string): Promise<YouTubePlaylistItemResponse['items']> {
+  const items: YouTubePlaylistItemResponse['items'] = [];
+  let nextPageToken: string | undefined;
 
-  // Remove common Instagram suffixes like "| Instagram" or "on Instagram"
-  title = title.replace(/\s*\|\s*Instagram.*$/i, '').replace(/\s+on Instagram.*$/i, '');
+  do {
+    const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems');
+    url.searchParams.set('part', 'snippet');
+    url.searchParams.set('playlistId', playlistId);
+    url.searchParams.set('maxResults', '50');
+    url.searchParams.set('key', YOUTUBE_API_KEY!);
+    if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
 
-  return title.trim();
+    const res = await fetch(url.toString());
+    if (!res.ok) throw new Error(`YouTube API error: ${res.status}`);
+    const data: YouTubePlaylistItemResponse = await res.json();
+    items.push(...data.items);
+    nextPageToken = data.nextPageToken;
+  } while (nextPageToken);
+
+  return items;
+}
+
+async function fetchVideoDetails(videoIds: string[]): Promise<Map<string, { duration: number; tags: string[] }>> {
+  const details = new Map<string, { duration: number; tags: string[] }>();
+
+  for (let i = 0; i < videoIds.length; i += 50) {
+    const batch = videoIds.slice(i, i + 50);
+    const url = new URL('https://www.googleapis.com/youtube/v3/videos');
+    url.searchParams.set('part', 'contentDetails,snippet');
+    url.searchParams.set('id', batch.join(','));
+    url.searchParams.set('key', YOUTUBE_API_KEY!);
+
+    const res = await fetch(url.toString());
+    if (!res.ok) throw new Error(`YouTube API error: ${res.status}`);
+    const data = await res.json();
+
+    for (const item of data.items) {
+      details.set(item.id, {
+        duration: parseISO8601Duration(item.contentDetails.duration),
+        tags: item.snippet?.tags || [],
+      });
+    }
+  }
+
+  return details;
 }
 
 export async function GET() {
-  if (!GOOGLE_API_KEY) {
+  if (!YOUTUBE_API_KEY || !YOUTH_YOUTUBE_CHANNEL_HANDLE) {
     return NextResponse.json(
-      { reels: [], error: 'Google API key not configured' },
+      { reels: [], cached: false, error: 'YouTube API key or youth channel handle not configured' },
       { status: 200 }
     );
   }
@@ -74,46 +96,53 @@ export async function GET() {
   }
 
   try {
-    // Fetch columns A (URL), B (title), C (thumbnail from Drive)
-    const url = new URL(`https://sheets.googleapis.com/v4/spreadsheets/${YOUTH_SHEET_ID}/values/A:C`);
-    url.searchParams.set('key', GOOGLE_API_KEY);
+    const uploadsPlaylistId = await getUploadsPlaylistId();
+    const playlistItems = await fetchAllPlaylistItems(uploadsPlaylistId);
+    const videoIds = playlistItems.map((item) => item.snippet.resourceId.videoId);
+    const videoDetails = await fetchVideoDetails(videoIds);
 
-    const res = await fetch(url.toString());
-    if (!res.ok) throw new Error(`Google Sheets API error: ${res.status}`);
-    const data = await res.json();
+    const reels: YouTubeVideo[] = playlistItems
+      .filter((item) => item.snippet.title !== 'Private video' && item.snippet.title !== 'Deleted video')
+      .map((item) => {
+        const videoId = item.snippet.resourceId.videoId;
+        const details = videoDetails.get(videoId);
+        const duration = details?.duration || 0;
+        const tags = details?.tags || [];
 
-    const rows: string[][] = data.values || [];
-    // Skip header row if present
-    const startIndex = rows[0]?.[0]?.toLowerCase().includes('url') ? 1 : 0;
+        // YouTube Shorts are vertical videos up to 60 seconds, or explicitly tagged
+        const isShort =
+          duration <= 60 ||
+          tags.some((tag) => tag.toLowerCase().includes('shorts')) ||
+          item.snippet.title.toLowerCase().includes('#shorts') ||
+          item.snippet.description.toLowerCase().includes('#shorts');
 
-    const rawReels = rows.slice(startIndex)
-      .filter((row) => row[0] && row[0].includes('instagram.com'))
-      .map((row) => ({
-        url: row[0].trim(),
-        title: row[1]?.trim() || '',
-        thumbnailUrl: row[2]?.trim() || '',
-      }));
-
-    // Scrape titles for reels that don't have one in the sheet
-    const reels: ReelMeta[] = await Promise.all(
-      rawReels.map(async (reel) => {
-        if (!reel.title) {
-          const scraped = await scrapeInstagramTitle(reel.url);
-          return { ...reel, title: scraped };
-        }
-        return reel;
+        return {
+          id: videoId,
+          videoId,
+          title: item.snippet.title,
+          description: item.snippet.description,
+          thumbnailUrl:
+            item.snippet.thumbnails.high?.url ||
+            item.snippet.thumbnails.medium?.url ||
+            item.snippet.thumbnails.default?.url ||
+            '',
+          publishedAt: item.snippet.publishedAt,
+          duration,
+          isShort,
+        };
       })
-    );
+      .filter((video) => video.isShort)
+      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
     cache = { reels, timestamp: Date.now() };
     return NextResponse.json({ reels, cached: false });
   } catch (error) {
-    console.error('Youth API error:', error);
+    console.error('Youth YouTube API error:', error);
     if (cache) {
       return NextResponse.json({ reels: cache.reels, cached: true });
     }
     return NextResponse.json(
-      { reels: [], error: 'Failed to fetch reels' },
+      { reels: [], cached: false, error: 'Failed to fetch reels' },
       { status: 500 }
     );
   }

@@ -1,6 +1,8 @@
 export interface NavItem {
   label: string;
   href: string;
+  external?: boolean;
+  children?: NavItem[];
 }
 
 export interface ServiceTime {
@@ -92,4 +94,14 @@ export interface PageMeta {
   title: string;
   description: string;
   path: string;
+}
+
+export interface MagazineArticle {
+  slug: string;
+  title: string;
+  author: string;
+  date: string;
+  coverImage: string;
+  excerpt: string;
+  content: string;
 }

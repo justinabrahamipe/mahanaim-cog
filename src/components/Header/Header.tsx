@@ -5,25 +5,49 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { navItems } from '@/config/church';
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
+import type { NavItem } from '@/types';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [menuItem, setMenuItem] = useState<NavItem | null>(null);
   const pathname = usePathname();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>, item: NavItem) => {
+    setAnchorEl(event.currentTarget);
+    setMenuItem(item);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setMenuItem(null);
+  };
+
+  const toggleSubmenu = (label: string) => {
+    setOpenSubmenu(openSubmenu === label ? null : label);
   };
 
   const isActive = (href: string) => {
@@ -46,26 +70,81 @@ export default function Header() {
         </Typography>
       </Box>
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item.label} disablePadding>
-            <ListItemButton
-              component={Link}
-              href={item.href}
-              sx={{
-                textAlign: 'center',
-                backgroundColor: isActive(item.href) ? 'action.selected' : 'transparent',
-              }}
-            >
-              <ListItemText
-                primary={item.label}
-                primaryTypographyProps={{
-                  fontWeight: isActive(item.href) ? 700 : 400,
-                  color: isActive(item.href) ? 'primary.main' : 'text.primary',
+        {navItems.map((item) =>
+          item.children ? (
+            <Box key={item.label}>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleSubmenu(item.label);
+                  }}
+                  sx={{
+                    textAlign: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: isActive(item.href) ? 'action.selected' : 'transparent',
+                  }}
+                >
+                  <ListItemText
+                    primary={item.label}
+                    primaryTypographyProps={{
+                      fontWeight: isActive(item.href) ? 700 : 400,
+                      color: isActive(item.href) ? 'primary.main' : 'text.primary',
+                    }}
+                  />
+                  {openSubmenu === item.label ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
+                </ListItemButton>
+              </ListItem>
+              <Collapse in={openSubmenu === item.label} timeout="auto" unmountOnExit>
+                <List disablePadding>
+                  {item.children.map((child) => (
+                    <ListItem key={child.label} disablePadding>
+                      <ListItemButton
+                        component={child.external ? 'a' : Link}
+                        href={child.href}
+                        target={child.external ? '_blank' : undefined}
+                        rel={child.external ? 'noopener noreferrer' : undefined}
+                        sx={{
+                          textAlign: 'center',
+                          pl: 4,
+                          backgroundColor: !child.external && isActive(child.href) ? 'action.selected' : 'transparent',
+                        }}
+                      >
+                        <ListItemText
+                          primary={child.label}
+                          primaryTypographyProps={{
+                            fontSize: '0.9rem',
+                            fontWeight: !child.external && isActive(child.href) ? 700 : 400,
+                            color: !child.external && isActive(child.href) ? 'primary.main' : 'text.secondary',
+                          }}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                </List>
+              </Collapse>
+            </Box>
+          ) : (
+            <ListItem key={item.label} disablePadding>
+              <ListItemButton
+                component={Link}
+                href={item.href}
+                sx={{
+                  textAlign: 'center',
+                  backgroundColor: isActive(item.href) ? 'action.selected' : 'transparent',
                 }}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
+              >
+                <ListItemText
+                  primary={item.label}
+                  primaryTypographyProps={{
+                    fontWeight: isActive(item.href) ? 700 : 400,
+                    color: isActive(item.href) ? 'primary.main' : 'text.primary',
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )
+        )}
       </List>
     </Box>
   );
@@ -126,29 +205,64 @@ export default function Header() {
             </Typography>
           </Box>
           <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center' }}>
-            {navItems.map((item) => (
-              <Button
-                key={item.label}
-                component={Link}
-                href={item.href}
-                sx={{
-                  color: '#fff',
-                  fontWeight: isActive(item.href) ? 700 : 500,
-                  borderBottom: isActive(item.href) ? '2px solid' : '2px solid transparent',
-                  borderColor: isActive(item.href) ? 'secondary.main' : 'transparent',
-                  borderRadius: 0,
-                  '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  },
-                }}
-              >
-                {item.label}
-              </Button>
-            ))}
+            {navItems.map((item) =>
+              item.children ? (
+                <Button
+                  key={item.label}
+                  onClick={(e) => handleMenuOpen(e, item)}
+                  endIcon={<KeyboardArrowDownIcon />}
+                  sx={{
+                    color: '#fff',
+                    fontWeight: isActive(item.href) ? 700 : 500,
+                    borderBottom: isActive(item.href) ? '2px solid' : '2px solid transparent',
+                    borderColor: isActive(item.href) ? 'secondary.main' : 'transparent',
+                    borderRadius: 0,
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    },
+                  }}
+                >
+                  {item.label}
+                </Button>
+              ) : (
+                <Button
+                  key={item.label}
+                  component={Link}
+                  href={item.href}
+                  sx={{
+                    color: '#fff',
+                    fontWeight: isActive(item.href) ? 700 : 500,
+                    borderBottom: isActive(item.href) ? '2px solid' : '2px solid transparent',
+                    borderColor: isActive(item.href) ? 'secondary.main' : 'transparent',
+                    borderRadius: 0,
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    },
+                  }}
+                >
+                  {item.label}
+                </Button>
+              )
+            )}
           </Box>
           <ThemeToggle />
         </Toolbar>
       </AppBar>
+      <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleMenuClose}>
+        {menuItem?.children?.map((child) => (
+          <MenuItem
+            key={child.label}
+            component={child.external ? 'a' : Link}
+            href={child.href}
+            target={child.external ? '_blank' : undefined}
+            rel={child.external ? 'noopener noreferrer' : undefined}
+            onClick={handleMenuClose}
+            selected={!child.external && isActive(child.href)}
+          >
+            {child.label}
+          </MenuItem>
+        ))}
+      </Menu>
       <Drawer
         variant="temporary"
         open={mobileOpen}
