@@ -46,7 +46,6 @@ export interface ContactMethod {
   details: string;
   iconType: 'phone' | 'email' | 'location' | 'whatsapp' | 'facebook';
   actionUrl: string;
-  colorTheme: 'primary' | 'secondary';
 }
 
 export interface ChurchContact {

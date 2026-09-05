@@ -2,98 +2,45 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { churchInfo } from '@/config/church';
+import { accent } from '@/theme/tokens';
 
 export default function MeetingInfo() {
   return (
-    <Box
-      sx={{
-        py: 10,
-        backgroundColor: 'background.paper',
-      }}
-    >
+    <Box component="section" sx={{ py: { xs: 8, md: 12 }, backgroundColor: 'background.paper' }}>
       <Container maxWidth="lg">
-        <Typography
-          variant="h3"
-          component="h2"
-          align="center"
-          gutterBottom
-          sx={{ fontWeight: 700, mb: 2, color: 'primary.main' }}
-        >
-          Our Services
-        </Typography>
-        <Typography
-          variant="body1"
-          align="center"
-          color="text.secondary"
-          sx={{
-            mb: 8,
-            maxWidth: '800px',
-            mx: 'auto',
-            fontSize: '1.1rem',
-            lineHeight: 1.8,
-          }}
-        >
-          We offer various services throughout the week to help you grow in your faith and connect
-          with our community.
-        </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: 3,
-          }}
-        >
+        <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2, mb: 5 }}>
+          <Typography variant="h3" sx={{ fontSize: { xs: '1.9rem', md: '2.3rem' } }}>
+            Find a service that fits your week
+          </Typography>
+        </Box>
+
+        <Box sx={{ borderTop: '1.5px solid', borderColor: 'divider' }}>
           {churchInfo.services.map((service) => (
-            <Card
+            <Box
               key={service.title}
               sx={{
-                width: { xs: '100%', sm: 'calc(50% - 12px)', md: 'calc(25% - 18px)' },
-                display: 'flex',
-                flexDirection: 'column',
-                transition: 'all 0.3s ease',
-                border: '2px solid transparent',
-                '&:hover': {
-                  transform: 'translateY(-8px)',
-                  boxShadow: (theme) =>
-                    theme.palette.mode === 'light'
-                      ? '0 12px 24px rgba(74, 14, 14, 0.15)'
-                      : '0 12px 24px rgba(196, 106, 106, 0.15)',
-                  borderColor: 'primary.main',
-                },
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: '200px 1fr' },
+                gap: { xs: 0.5, sm: 4 },
+                py: 3,
+                borderBottom: '1.5px solid',
+                borderColor: 'divider',
               }}
             >
-              <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                <Typography
-                  variant="h6"
-                  component="h3"
-                  gutterBottom
-                  sx={{ fontWeight: 600, color: 'primary.main', mb: 2 }}
-                >
-                  {service.title}
+              <Box>
+                <Typography sx={{ fontWeight: 700, fontSize: '1.05rem' }}>{service.day}</Typography>
+                <Typography sx={{ color: accent, fontWeight: 600, fontSize: '0.92rem' }}>
+                  {service.time}
                 </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
-                  <CalendarTodayIcon fontSize="small" color="secondary" />
-                  <Typography variant="body2" color="text.primary" fontWeight={500}>
-                    {service.day}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                  <AccessTimeIcon fontSize="small" color="secondary" />
-                  <Typography variant="body2" color="text.primary" fontWeight={500}>
-                    {service.time}
-                  </Typography>
-                </Box>
-                <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+              </Box>
+              <Box>
+                <Typography sx={{ fontWeight: 700, fontSize: '1.1rem', mb: 0.5 }}>{service.title}</Typography>
+                <Typography sx={{ color: 'text.secondary', lineHeight: 1.6, maxWidth: 560 }}>
                   {service.description}
                 </Typography>
-              </CardContent>
-            </Card>
+              </Box>
+            </Box>
           ))}
         </Box>
       </Container>

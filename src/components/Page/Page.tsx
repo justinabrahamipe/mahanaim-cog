@@ -7,9 +7,10 @@ import Footer from '@/components/Footer/Footer';
 interface PageProps {
   children: React.ReactNode;
   snap?: boolean;
+  transparentHeader?: boolean;
 }
 
-export default function Page({ children, snap }: PageProps) {
+export default function Page({ children, snap, transparentHeader }: PageProps) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -30,7 +31,7 @@ export default function Page({ children, snap }: PageProps) {
         }),
       }}
     >
-      <Header />
+      <Header overlay={transparentHeader} />
       <Box
         component="main"
         sx={{

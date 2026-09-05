@@ -18,6 +18,8 @@ import { YouTubeVideo, SermonsApiResponse } from '@/types/youtube';
 
 type SortOption = 'newest' | 'oldest' | 'alphabetical';
 
+const SERMONS_PER_PAGE = 16;
+
 export default function Sermons() {
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,6 +31,7 @@ export default function Sermons() {
   const [shortsViewerOpen, setShortsViewerOpen] = useState(false);
   const [currentShortIndex, setCurrentShortIndex] = useState(0);
   const [showAllShorts, setShowAllShorts] = useState(false);
+  const [visibleSermonCount, setVisibleSermonCount] = useState(SERMONS_PER_PAGE);
 
   useEffect(() => {
     async function fetchSermons() {
@@ -66,6 +69,13 @@ export default function Sermons() {
     }
     return filtered;
   }, [sermons, search, sort]);
+
+  useEffect(() => {
+    setVisibleSermonCount(SERMONS_PER_PAGE);
+  }, [search, sort]);
+
+  const visibleSermons = filteredSermons.slice(0, visibleSermonCount);
+  const hasMoreSermons = visibleSermonCount < filteredSermons.length;
 
   const handleSermonClick = (video: YouTubeVideo) => {
     setSelectedVideo(video);
@@ -185,26 +195,41 @@ export default function Sermons() {
                   </Typography>
                 </Box>
               ) : (
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gridTemplateColumns: {
-                      xs: '1fr',
-                      sm: 'repeat(2, 1fr)',
-                      md: 'repeat(3, 1fr)',
-                      lg: 'repeat(4, 1fr)',
-                    },
-                    gap: 3,
-                  }}
-                >
-                  {filteredSermons.map((video) => (
-                    <SermonCard
-                      key={video.videoId}
-                      video={video}
-                      onClick={handleSermonClick}
-                    />
-                  ))}
-                </Box>
+                <>
+                  <Box
+                    sx={{
+                      display: 'grid',
+                      gridTemplateColumns: {
+                        xs: '1fr',
+                        sm: 'repeat(2, 1fr)',
+                        md: 'repeat(3, 1fr)',
+                        lg: 'repeat(4, 1fr)',
+                      },
+                      gap: 3,
+                    }}
+                  >
+                    {visibleSermons.map((video) => (
+                      <SermonCard
+                        key={video.videoId}
+                        video={video}
+                        onClick={handleSermonClick}
+                      />
+                    ))}
+                  </Box>
+
+                  {hasMoreSermons && (
+                    <Box sx={{ textAlign: 'center', mt: 4 }}>
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => setVisibleSermonCount((prev) => prev + SERMONS_PER_PAGE)}
+                        sx={{ fontWeight: 600 }}
+                      >
+                        Show more ({filteredSermons.length - visibleSermonCount} remaining)
+                      </Button>
+                    </Box>
+                  )}
+                </>
               )}
             </>
           )}

@@ -13,6 +13,8 @@ import Link from 'next/link';
 import Page from '@/components/Page/Page';
 import PageBanner from '@/components/Page/Components/PageBanner';
 import PageTitle from '@/components/Page/Components/PageTitle';
+import { panelSx } from '@/theme/motif';
+import { ink, accent } from '@/theme/tokens';
 import type { MagazineArticle } from '@/types';
 
 export default function Magazine() {
@@ -41,41 +43,18 @@ export default function Magazine() {
         <PageTitle title="Magazine" subtitle="Stories, reflections, and updates from Mahanaim Youth" />
       </PageBanner>
 
-      <Box sx={{ py: 6, backgroundColor: 'background.default' }}>
+      <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: 'background.default' }}>
         <Container maxWidth="lg">
           {loading ? (
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
-                gap: 3,
-              }}
-            >
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 3 }}>
               {Array.from({ length: 6 }).map((_, i) => (
-                <Skeleton key={i} variant="rectangular" animation="wave" sx={{ height: 320, borderRadius: 2 }} />
+                <Skeleton key={i} variant="rectangular" animation="wave" sx={{ height: 320 }} />
               ))}
             </Box>
           ) : articles.length > 0 ? (
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
-                gap: 3,
-              }}
-            >
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 3 }}>
               {articles.map((article) => (
-                <Card
-                  key={article.slug}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-6px)',
-                      boxShadow: 6,
-                    },
-                  }}
-                >
+                <Card key={article.slug} sx={{ ...panelSx, display: 'flex', flexDirection: 'column', backgroundColor: 'background.paper' }}>
                   <CardActionArea
                     component={Link}
                     href={`/youth/magazine/${article.slug}`}
@@ -89,23 +68,15 @@ export default function Magazine() {
                         sx={{ aspectRatio: '16 / 9', objectFit: 'cover' }}
                       />
                     ) : (
-                      <Box
-                        sx={{
-                          aspectRatio: '16 / 9',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          background: 'linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)',
-                        }}
-                      >
-                        <MenuBookIcon sx={{ fontSize: 48, color: 'white' }} />
+                      <Box sx={{ aspectRatio: '16 / 9', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: ink }}>
+                        <MenuBookIcon sx={{ fontSize: 44, color: accent }} />
                       </Box>
                     )}
                     <CardContent sx={{ flex: 1 }}>
                       <Typography
                         variant="h6"
                         sx={{
-                          fontWeight: 700,
+                          fontSize: '1.1rem',
                           mb: 1,
                           display: '-webkit-box',
                           WebkitLineClamp: 2,
@@ -129,7 +100,7 @@ export default function Magazine() {
                         {article.excerpt}
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        {[article.author, article.date].filter(Boolean).join(' · ')}
+                        {[article.author, article.date].filter(Boolean).join(', ')}
                       </Typography>
                     </CardContent>
                   </CardActionArea>
@@ -140,7 +111,7 @@ export default function Magazine() {
             <Box sx={{ textAlign: 'center', py: 8 }}>
               <MenuBookIcon sx={{ fontSize: 60, color: 'text.secondary', mb: 2, opacity: 0.5 }} />
               <Typography variant="h6" color="text.secondary">
-                Articles coming soon!
+                Articles coming soon
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
                 Check back soon for the first issue of the Mahanaim Youth Magazine.

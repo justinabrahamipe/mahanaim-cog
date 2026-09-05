@@ -15,7 +15,83 @@ import LanguageIcon from '@mui/icons-material/Language';
 import Page from '@/components/Page/Page';
 import PageBanner from '@/components/Page/Components/PageBanner';
 import PageTitle from '@/components/Page/Components/PageTitle';
+import { panelSx } from '@/theme/motif';
+import { ink, accent } from '@/theme/tokens';
 import { churches } from '@/config/churches';
+
+function PersonCard({
+  name,
+  role,
+  highlight,
+  phone,
+  whatsapp,
+  facebook,
+  instagram,
+  website,
+}: {
+  name: string;
+  role: string;
+  highlight?: boolean;
+  phone?: string;
+  whatsapp?: string;
+  facebook?: string;
+  instagram?: string;
+  website?: string;
+}) {
+  return (
+    <Card
+      sx={{
+        ...panelSx,
+        width: { xs: '100%', sm: 'calc(50% - 12px)', md: 'calc(25% - 18px)' },
+        textAlign: 'center',
+        backgroundColor: 'background.paper',
+      }}
+    >
+      <CardContent sx={{ p: 3 }}>
+        <Avatar sx={{ width: 76, height: 76, mx: 'auto', mb: 2, backgroundColor: highlight ? accent : ink }}>
+          <PersonIcon sx={{ fontSize: 38, color: highlight ? ink : '#F3EEE6' }} />
+        </Avatar>
+        <Typography sx={{ fontWeight: 700, fontSize: '1.05rem' }}>{name}</Typography>
+        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1.5 }}>
+          {role}
+        </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.5, flexWrap: 'wrap' }}>
+          {phone && (
+            <IconButton href={`tel:${phone}`} size="small" sx={{ color: 'text.secondary', '&:hover': { color: accent } }}>
+              <PhoneIcon fontSize="small" />
+            </IconButton>
+          )}
+          {whatsapp && (
+            <IconButton
+              href={`https://wa.me/${whatsapp.replace('+', '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              size="small"
+              sx={{ color: 'text.secondary', '&:hover': { color: accent } }}
+            >
+              <WhatsAppIcon fontSize="small" />
+            </IconButton>
+          )}
+          {facebook && (
+            <IconButton href={facebook} target="_blank" rel="noopener noreferrer" size="small" sx={{ color: 'text.secondary', '&:hover': { color: accent } }}>
+              <FacebookIcon fontSize="small" />
+            </IconButton>
+          )}
+          {instagram && (
+            <IconButton href={instagram} target="_blank" rel="noopener noreferrer" size="small" sx={{ color: 'text.secondary', '&:hover': { color: accent } }}>
+              <InstagramIcon fontSize="small" />
+            </IconButton>
+          )}
+          {website && (
+            <IconButton href={website} target="_blank" rel="noopener noreferrer" size="small" sx={{ color: 'text.secondary', '&:hover': { color: accent } }}>
+              <LanguageIcon fontSize="small" />
+            </IconButton>
+          )}
+        </Box>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function Churches() {
   const motherChurch = churches.find((c) => c.isMotherChurch);
@@ -27,214 +103,37 @@ export default function Churches() {
         <PageTitle title="Our Churches" subtitle="United in faith across the UK" />
       </PageBanner>
 
-      <Box sx={{ py: 6, backgroundColor: 'background.default' }}>
+      <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: 'background.default' }}>
         <Container maxWidth="lg">
           {motherChurch && (
             <Box sx={{ mb: 8 }}>
-              <Typography
-                variant="h5"
-                align="center"
-                sx={{ fontWeight: 700, mb: 4, color: 'primary.main' }}
-              >
+              <Typography variant="h5" sx={{ fontSize: '1.3rem', mb: 4 }}>
                 Mother Church
               </Typography>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'center',
-                  gap: 3,
-                }}
-              >
-                {/* Senior Pastor */}
-                <Card
-                  sx={{
-                    width: { xs: '100%', sm: 'calc(50% - 12px)', md: 'calc(25% - 18px)' },
-                    textAlign: 'center',
-                    border: '2px solid',
-                    borderColor: 'secondary.main',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-8px)',
-                      boxShadow: (theme) =>
-                        theme.palette.mode === 'light'
-                          ? '0 12px 24px rgba(27, 73, 101, 0.15)'
-                          : '0 12px 24px rgba(91, 163, 207, 0.15)',
-                    },
-                  }}
-                >
-                  <CardContent sx={{ p: 3 }}>
-                    <Avatar
-                      sx={{
-                        width: 80,
-                        height: 80,
-                        mx: 'auto',
-                        mb: 2,
-                        backgroundColor: 'secondary.main',
-                      }}
-                    >
-                      <PersonIcon sx={{ fontSize: 40 }} />
-                    </Avatar>
-                    <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main', mb: 0.5 }}>
-                      {motherChurch.pastor}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
-                      Senior Pastor
-                    </Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.5 }}>
-                      {motherChurch.pastorPhone && (
-                        <IconButton href={`tel:${motherChurch.pastorPhone}`} size="small" sx={{ color: '#0088cc' }}>
-                          <PhoneIcon fontSize="small" />
-                        </IconButton>
-                      )}
-                      {motherChurch.pastorWhatsapp && (
-                        <IconButton href={`https://wa.me/${motherChurch.pastorWhatsapp.replace('+', '')}`} target="_blank" rel="noopener noreferrer" size="small" sx={{ color: '#25D366' }}>
-                          <WhatsAppIcon fontSize="small" />
-                        </IconButton>
-                      )}
-                    </Box>
-                  </CardContent>
-                </Card>
-                {/* Associate Pastors */}
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+                <PersonCard name={motherChurch.pastor} role="Senior Pastor" highlight phone={motherChurch.pastorPhone} whatsapp={motherChurch.pastorWhatsapp} />
                 {motherChurch.associatePastors?.map((pastor) => (
-                  <Card
-                    key={pastor.name}
-                    sx={{
-                      width: { xs: '100%', sm: 'calc(50% - 12px)', md: 'calc(25% - 18px)' },
-                      textAlign: 'center',
-                      border: '2px solid transparent',
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
-                        transform: 'translateY(-8px)',
-                        borderColor: 'primary.main',
-                        boxShadow: (theme) =>
-                          theme.palette.mode === 'light'
-                            ? '0 12px 24px rgba(27, 73, 101, 0.12)'
-                            : '0 12px 24px rgba(91, 163, 207, 0.12)',
-                      },
-                    }}
-                  >
-                    <CardContent sx={{ p: 3 }}>
-                      <Avatar
-                        sx={{
-                          width: 80,
-                          height: 80,
-                          mx: 'auto',
-                          mb: 2,
-                          backgroundColor: 'primary.main',
-                        }}
-                      >
-                        <PersonIcon sx={{ fontSize: 40 }} />
-                      </Avatar>
-                      <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main', mb: 0.5 }}>
-                        {pastor.name}
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
-                        Associate Pastor
-                      </Typography>
-                      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.5 }}>
-                        {pastor.phone && (
-                          <IconButton href={`tel:${pastor.phone}`} size="small" sx={{ color: '#0088cc' }}>
-                            <PhoneIcon fontSize="small" />
-                          </IconButton>
-                        )}
-                        {pastor.whatsapp && (
-                          <IconButton href={`https://wa.me/${pastor.whatsapp.replace('+', '')}`} target="_blank" rel="noopener noreferrer" size="small" sx={{ color: '#25D366' }}>
-                            <WhatsAppIcon fontSize="small" />
-                          </IconButton>
-                        )}
-                      </Box>
-                    </CardContent>
-                  </Card>
+                  <PersonCard key={pastor.name} name={pastor.name} role="Associate Pastor" phone={pastor.phone} whatsapp={pastor.whatsapp} />
                 ))}
               </Box>
             </Box>
           )}
 
-          <Typography
-            variant="h5"
-            align="center"
-            sx={{ fontWeight: 700, mb: 4, color: 'primary.main' }}
-          >
+          <Typography variant="h5" sx={{ fontSize: '1.3rem', mb: 4 }}>
             Sister Churches
           </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              gap: 3,
-            }}
-          >
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
             {sisterChurches.map((church) => (
-              <Card
+              <PersonCard
                 key={church.location}
-                sx={{
-                  width: { xs: '100%', sm: 'calc(50% - 12px)', md: 'calc(25% - 18px)' },
-                  textAlign: 'center',
-                  transition: 'all 0.3s ease',
-                  border: '2px solid transparent',
-                  '&:hover': {
-                    transform: 'translateY(-8px)',
-                    borderColor: 'primary.main',
-                    boxShadow: (theme) =>
-                      theme.palette.mode === 'light'
-                        ? '0 12px 24px rgba(27, 73, 101, 0.12)'
-                        : '0 12px 24px rgba(91, 163, 207, 0.12)',
-                  },
-                }}
-              >
-                <CardContent sx={{ p: 3 }}>
-                  <Avatar
-                    sx={{
-                      width: 80,
-                      height: 80,
-                      mx: 'auto',
-                      mb: 2,
-                      backgroundColor: 'primary.main',
-                    }}
-                  >
-                    <PersonIcon sx={{ fontSize: 40 }} />
-                  </Avatar>
-                  <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main', mb: 0.5 }}>
-                    {church.location}
-                  </Typography>
-                  {church.pastor && (
-                    <Typography variant="body2" color="text.primary" sx={{ fontWeight: 500, mb: 1.5 }}>
-                      {church.pastor}
-                    </Typography>
-                  )}
-                  {church.contact && (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.5, flexWrap: 'wrap' }}>
-                      {church.contact.phone && (
-                        <IconButton href={`tel:${church.contact.phone}`} size="small" sx={{ color: '#0088cc' }}>
-                          <PhoneIcon fontSize="small" />
-                        </IconButton>
-                      )}
-                      {church.contact.whatsapp && (
-                        <IconButton href={`https://wa.me/${church.contact.whatsapp.replace('+', '')}`} target="_blank" rel="noopener noreferrer" size="small" sx={{ color: '#25D366' }}>
-                          <WhatsAppIcon fontSize="small" />
-                        </IconButton>
-                      )}
-                      {church.contact.facebook && (
-                        <IconButton href={church.contact.facebook} target="_blank" rel="noopener noreferrer" size="small" sx={{ color: '#1877F2' }}>
-                          <FacebookIcon fontSize="small" />
-                        </IconButton>
-                      )}
-                      {church.contact.instagram && (
-                        <IconButton href={church.contact.instagram} target="_blank" rel="noopener noreferrer" size="small" sx={{ color: '#E4405F' }}>
-                          <InstagramIcon fontSize="small" />
-                        </IconButton>
-                      )}
-                      {church.contact.website && (
-                        <IconButton href={church.contact.website} target="_blank" rel="noopener noreferrer" size="small" sx={{ color: '#FF6D00' }}>
-                          <LanguageIcon fontSize="small" />
-                        </IconButton>
-                      )}
-                    </Box>
-                  )}
-                </CardContent>
-              </Card>
+                name={church.location}
+                role={church.pastor || ''}
+                phone={church.contact?.phone}
+                whatsapp={church.contact?.whatsapp}
+                facebook={church.contact?.facebook}
+                instagram={church.contact?.instagram}
+                website={church.contact?.website}
+              />
             ))}
           </Box>
         </Container>
