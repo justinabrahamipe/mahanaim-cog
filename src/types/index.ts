@@ -1,6 +1,8 @@
 export interface NavItem {
   label: string;
   href: string;
+  external?: boolean;
+  children?: NavItem[];
 }
 
 export interface ServiceTime {
@@ -44,7 +46,6 @@ export interface ContactMethod {
   details: string;
   iconType: 'phone' | 'email' | 'location' | 'whatsapp' | 'facebook';
   actionUrl: string;
-  colorTheme: 'primary' | 'secondary';
 }
 
 export interface ChurchContact {
@@ -92,4 +93,14 @@ export interface PageMeta {
   title: string;
   description: string;
   path: string;
+}
+
+export interface MagazineArticle {
+  slug: string;
+  title: string;
+  author: string;
+  date: string;
+  coverImage: string;
+  excerpt: string;
+  content: string;
 }

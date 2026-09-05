@@ -53,6 +53,12 @@ export const pageMetadata: Record<string, PageMeta> = {
       'Mahanaim Youth - Follow our youth ministry and watch the latest reels and content.',
     path: '/youth',
   },
+  magazine: {
+    title: 'Magazine | Mahanaim Church of God Manchester',
+    description:
+      'Read articles from the Mahanaim Youth Magazine - stories, reflections, and updates from our youth ministry.',
+    path: '/youth/magazine',
+  },
   churches: {
     title: 'Our Churches | Mahanaim Church of God Manchester',
     description:

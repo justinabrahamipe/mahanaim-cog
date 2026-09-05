@@ -11,57 +11,49 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import Link from 'next/link';
 import { churchInfo, navItems } from '@/config/church';
+import { ink, accent } from '@/theme/tokens';
+
+const FOOTER_TEXT = 'rgba(243, 238, 230, 0.75)';
 
 export default function Footer() {
   return (
-    <Box
-      component="footer"
-      sx={{
-        py: 6,
-        px: 2,
-        mt: 'auto',
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light' ? theme.palette.grey[200] : theme.palette.grey[900],
-      }}
-    >
-      <Container maxWidth="lg">
+    <Box component="footer" sx={{ backgroundColor: ink, color: '#F3EEE6', mt: 'auto' }}>
+      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <Box
           sx={{
             display: 'grid',
             gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
-            gap: 4,
-            mb: 4,
+            gap: 5,
+            mb: 5,
           }}
         >
-          {/* Column 1: Church Info */}
           <Box>
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, color: 'primary.main' }}>
+            <Typography sx={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.2rem', mb: 2 }}>
               {churchInfo.name}
             </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, mb: 1.5 }}>
-              <LocationOnIcon fontSize="small" color="primary" sx={{ mt: 0.3 }} />
-              <Typography variant="body2" color="text.secondary">
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.25, mb: 1.5 }}>
+              <LocationOnIcon fontSize="small" sx={{ color: accent, mt: 0.3 }} />
+              <Typography variant="body2" sx={{ color: FOOTER_TEXT }}>
                 {churchInfo.address}
               </Typography>
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
-              <PhoneIcon fontSize="small" color="primary" />
-              <Typography variant="body2" color="text.secondary">
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, mb: 1.5 }}>
+              <PhoneIcon fontSize="small" sx={{ color: accent }} />
+              <Typography variant="body2" sx={{ color: FOOTER_TEXT }}>
                 {churchInfo.phone}
               </Typography>
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <EmailIcon fontSize="small" color="primary" />
-              <Typography variant="body2" color="text.secondary">
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
+              <EmailIcon fontSize="small" sx={{ color: accent }} />
+              <Typography variant="body2" sx={{ color: FOOTER_TEXT }}>
                 {churchInfo.email}
               </Typography>
             </Box>
           </Box>
 
-          {/* Column 2: Quick Links */}
           <Box>
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, color: 'primary.main' }}>
-              Quick Links
+            <Typography sx={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.05rem', mb: 2 }}>
+              Find your way around
             </Typography>
             {navItems.map((item) => (
               <Typography
@@ -71,10 +63,11 @@ export default function Footer() {
                 variant="body2"
                 sx={{
                   display: 'block',
-                  mb: 1,
-                  color: 'text.secondary',
+                  mb: 1.25,
+                  color: FOOTER_TEXT,
                   textDecoration: 'none',
-                  '&:hover': { color: 'primary.main' },
+                  width: 'fit-content',
+                  '&:hover': { color: accent },
                 }}
               >
                 {item.label}
@@ -82,23 +75,16 @@ export default function Footer() {
             ))}
           </Box>
 
-          {/* Column 3: Map Embed */}
           <Box>
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, color: 'primary.main' }}>
-              Find Us
+            <Typography sx={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.05rem', mb: 2 }}>
+              Find us
             </Typography>
-            <Box
-              sx={{
-                borderRadius: 1,
-                overflow: 'hidden',
-                height: 180,
-              }}
-            >
+            <Box sx={{ border: '1.5px solid rgba(243,238,230,0.16)', borderRadius: '3px', overflow: 'hidden', height: 170 }}>
               <iframe
                 src={churchInfo.mapEmbedUrl}
                 width="100%"
-                height="180"
-                style={{ border: 0 }}
+                height="170"
+                style={{ border: 0, filter: 'grayscale(0.3) contrast(1.05)' }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -108,11 +94,9 @@ export default function Footer() {
           </Box>
         </Box>
 
-        {/* Bottom bar */}
         <Box
           sx={{
-            borderTop: 1,
-            borderColor: 'divider',
+            borderTop: '1px solid rgba(243,238,230,0.14)',
             pt: 3,
             display: 'flex',
             flexDirection: { xs: 'column', sm: 'row' },
@@ -121,49 +105,26 @@ export default function Footer() {
             gap: 2,
           }}
         >
-          <Typography variant="body2" color="text.secondary">
-            &copy; {new Date().getFullYear()} {churchInfo.name} Manchester. All rights reserved.
+          <Typography variant="body2" sx={{ color: FOOTER_TEXT }}>
+            &copy; {new Date().getFullYear()} {churchInfo.name}, Manchester.
           </Typography>
           <Box>
-            <IconButton
-              aria-label="Facebook"
-              color="primary"
-              href={churchInfo.socialLinks.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                transition: 'all 0.3s ease',
-                '&:hover': { transform: 'translateY(-3px)', color: 'secondary.main' },
-              }}
-            >
-              <FacebookIcon />
-            </IconButton>
-            <IconButton
-              aria-label="Instagram"
-              color="primary"
-              href={churchInfo.socialLinks.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                transition: 'all 0.3s ease',
-                '&:hover': { transform: 'translateY(-3px)', color: 'secondary.main' },
-              }}
-            >
-              <InstagramIcon />
-            </IconButton>
-            <IconButton
-              aria-label="YouTube"
-              color="primary"
-              href={churchInfo.socialLinks.youtube}
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                transition: 'all 0.3s ease',
-                '&:hover': { transform: 'translateY(-3px)', color: 'secondary.main' },
-              }}
-            >
-              <YouTubeIcon />
-            </IconButton>
+            {[
+              { Icon: FacebookIcon, href: churchInfo.socialLinks.facebook, label: 'Facebook' },
+              { Icon: InstagramIcon, href: churchInfo.socialLinks.instagram, label: 'Instagram' },
+              { Icon: YouTubeIcon, href: churchInfo.socialLinks.youtube, label: 'YouTube' },
+            ].map(({ Icon, href, label }) => (
+              <IconButton
+                key={label}
+                aria-label={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ color: FOOTER_TEXT, '&:hover': { color: accent } }}
+              >
+                <Icon />
+              </IconButton>
+            ))}
           </Box>
         </Box>
       </Container>

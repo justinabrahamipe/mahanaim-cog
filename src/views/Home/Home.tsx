@@ -6,7 +6,7 @@ import AboutPreview from './Components/AboutPreview';
 
 export default function Home() {
   return (
-    <Page snap>
+    <Page transparentHeader>
       <HeroSection />
       <AboutPreview />
       <MeetingInfo />

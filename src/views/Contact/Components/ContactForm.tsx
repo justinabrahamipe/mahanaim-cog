@@ -4,8 +4,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
 import Alert from '@mui/material/Alert';
+import { panelStaticSx } from '@/theme/motif';
+import { ink } from '@/theme/tokens';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -32,13 +33,13 @@ export default function ContactForm() {
   };
 
   return (
-    <Paper sx={{ p: 4 }}>
-      <Typography variant="h5" gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
-        Send us a Message
+    <Box sx={{ ...panelStaticSx, p: 4, backgroundColor: 'background.paper' }}>
+      <Typography variant="h5" sx={{ fontSize: '1.4rem', mb: 3 }}>
+        Send us a message
       </Typography>
       {submitted && (
         <Alert severity="success" sx={{ mb: 3 }}>
-          Thank you for your message! We will get back to you soon.
+          Sent. We will get back to you soon.
         </Alert>
       )}
       <Box component="form" onSubmit={handleSubmit}>
@@ -77,21 +78,11 @@ export default function ContactForm() {
           variant="contained"
           size="large"
           fullWidth
-          sx={{
-            backgroundColor: 'primary.main',
-            fontWeight: 600,
-            py: 1.5,
-            '&:hover': {
-              backgroundColor: 'primary.dark',
-              transform: 'translateY(-2px)',
-              boxShadow: '0 6px 20px rgba(183, 28, 28, 0.3)',
-            },
-            transition: 'all 0.3s ease',
-          }}
+          sx={{ backgroundColor: ink, color: '#F3EEE6', py: 1.5, '&:hover': { backgroundColor: '#3A302A' } }}
         >
           Send via WhatsApp
         </Button>
       </Box>
-    </Paper>
+    </Box>
   );
 }

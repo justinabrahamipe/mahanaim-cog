@@ -7,7 +7,6 @@ export const contactMethods: ContactMethod[] = [
     details: '+44 7411 539877',
     iconType: 'phone',
     actionUrl: 'tel:+447411539877',
-    colorTheme: 'primary',
   },
   {
     title: 'WhatsApp',
@@ -15,7 +14,6 @@ export const contactMethods: ContactMethod[] = [
     details: '+44 7411 539877',
     iconType: 'whatsapp',
     actionUrl: 'https://wa.me/447411539877',
-    colorTheme: 'secondary',
   },
   {
     title: 'Email Us',
@@ -23,7 +21,6 @@ export const contactMethods: ContactMethod[] = [
     details: 'mahanaimcog@gmail.com',
     iconType: 'email',
     actionUrl: 'mailto:mahanaimcog@gmail.com',
-    colorTheme: 'secondary',
   },
   {
     title: 'Facebook',
@@ -31,6 +28,5 @@ export const contactMethods: ContactMethod[] = [
     details: 'Mahanaim Church of God',
     iconType: 'facebook',
     actionUrl: 'https://www.facebook.com/mahanaimcog',
-    colorTheme: 'primary',
   },
 ];

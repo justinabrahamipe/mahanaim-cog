@@ -1,8 +1,6 @@
 'use client';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
 import Page from '@/components/Page/Page';
 import PageBanner from '@/components/Page/Components/PageBanner';
 import PageTitle from '@/components/Page/Components/PageTitle';
@@ -18,15 +16,14 @@ export default function Contact() {
         <PageTitle title="Contact Us" subtitle="We would love to hear from you" />
       </PageBanner>
 
-      <Box sx={{ py: 6, backgroundColor: 'background.default' }}>
+      <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: 'background.default' }}>
         <Container maxWidth="lg">
-          {/* Contact cards */}
           <Box
             sx={{
               display: 'grid',
               gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
               gap: 3,
-              mb: 6,
+              mb: 7,
             }}
           >
             {contactMethods.map((method) => (
@@ -34,17 +31,15 @@ export default function Contact() {
             ))}
           </Box>
 
-          {/* Contact form */}
           <Box
             sx={{
               display: 'grid',
               gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
               gap: 4,
-              mb: 6,
             }}
           >
             <ContactForm />
-            <Paper sx={{ p: 0, overflow: 'hidden', borderRadius: 2, minHeight: 350 }}>
+            <Box sx={{ border: '1.5px solid', borderColor: 'divider', overflow: 'hidden', minHeight: 350 }}>
               <iframe
                 src={churchInfo.mapEmbedUrl}
                 width="100%"
@@ -55,17 +50,7 @@ export default function Contact() {
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Mahanaim Church of God Location"
               />
-            </Paper>
-          </Box>
-
-          {/* Find Us section */}
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="h5" sx={{ fontWeight: 700, mb: 2, color: 'primary.main' }}>
-              Find Us
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              {churchInfo.address}
-            </Typography>
+            </Box>
           </Box>
         </Container>
       </Box>

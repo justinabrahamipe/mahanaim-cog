@@ -7,6 +7,8 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { panelSx } from '@/theme/motif';
+import { accent } from '@/theme/tokens';
 import { Leader } from '@/types';
 
 interface LeaderCardProps {
@@ -15,47 +17,18 @@ interface LeaderCardProps {
 
 export default function LeaderCard({ leader }: LeaderCardProps) {
   return (
-    <Card
-      sx={{
-        height: '100%',
-        textAlign: 'center',
-        p: 3,
-        transition: 'all 0.3s ease',
-        border: '2px solid transparent',
-        '&:hover': {
-          transform: 'translateY(-8px)',
-          borderColor: 'primary.main',
-          boxShadow: (theme) =>
-            theme.palette.mode === 'light'
-              ? '0 12px 24px rgba(0, 0, 0, 0.12)'
-              : '0 12px 24px rgba(0, 0, 0, 0.4)',
-        },
-      }}
-    >
-      <CardContent>
+    <Card sx={{ ...panelSx, height: '100%', textAlign: 'center', backgroundColor: 'background.paper' }}>
+      <CardContent sx={{ p: 3 }}>
         <Avatar
           src={leader.imageUrl}
           alt={leader.name}
-          sx={{
-            width: 120,
-            height: 120,
-            mx: 'auto',
-            mb: 2,
-            border: '3px solid',
-            borderColor: 'primary.main',
-          }}
+          sx={{ width: 112, height: 112, mx: 'auto', mb: 2, border: '2px solid', borderColor: 'text.primary' }}
         />
-        <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main' }}>
-          {leader.name}
-        </Typography>
-        <Typography variant="subtitle2" color="secondary.main" sx={{ mb: 2, fontWeight: 600 }}>
+        <Typography sx={{ fontWeight: 700, fontSize: '1.1rem' }}>{leader.name}</Typography>
+        <Typography sx={{ color: accent, mb: 2, fontWeight: 600, fontSize: '0.9rem' }}>
           {leader.designation}
         </Typography>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{ lineHeight: 1.7, mb: 2 }}
-        >
+        <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7, mb: 2 }}>
           {leader.description}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
@@ -64,12 +37,8 @@ export default function LeaderCard({ leader }: LeaderCardProps) {
               href={leader.facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
-              color="primary"
               size="small"
-              sx={{
-                transition: 'all 0.3s ease',
-                '&:hover': { transform: 'translateY(-3px)', color: 'secondary.main' },
-              }}
+              sx={{ color: 'text.primary', '&:hover': { color: accent } }}
             >
               <FacebookIcon />
             </IconButton>
@@ -79,12 +48,8 @@ export default function LeaderCard({ leader }: LeaderCardProps) {
               href={leader.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              color="primary"
               size="small"
-              sx={{
-                transition: 'all 0.3s ease',
-                '&:hover': { transform: 'translateY(-3px)', color: 'secondary.main' },
-              }}
+              sx={{ color: 'text.primary', '&:hover': { color: accent } }}
             >
               <WhatsAppIcon />
             </IconButton>

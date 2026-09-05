@@ -13,6 +13,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Page from '@/components/Page/Page';
 import PageBanner from '@/components/Page/Components/PageBanner';
 import PageTitle from '@/components/Page/Components/PageTitle';
+import { panelSx } from '@/theme/motif';
+import { ink, accent } from '@/theme/tokens';
 import { CalendarEvent } from '@/types';
 
 function isMultiDay(start: string, end: string, allDay: boolean) {
@@ -169,42 +171,32 @@ export default function Events() {
                   <Card
                     key={event.id}
                     sx={{
+                      ...panelSx,
                       height: '100%',
                       display: 'flex',
                       flexDirection: 'column',
-                      transition: 'all 0.3s ease',
-                      border: '2px solid transparent',
                       overflow: 'visible',
                       position: 'relative',
-                      '&:hover': {
-                        transform: 'translateY(-8px)',
-                        borderColor: today ? 'secondary.main' : 'primary.main',
-                        boxShadow: (theme) =>
-                          theme.palette.mode === 'light'
-                            ? '0 12px 24px rgba(27, 73, 101, 0.15)'
-                            : '0 12px 24px rgba(91, 163, 207, 0.15)',
-                      },
                     }}
                   >
                     {/* Date badge */}
                     <Box
                       sx={{
-                        backgroundColor: today ? 'secondary.main' : 'primary.main',
-                        color: 'white',
+                        backgroundColor: today ? accent : ink,
+                        color: today ? ink : '#F3EEE6',
                         textAlign: 'center',
                         py: 2,
                         px: 3,
-                        borderRadius: '8px 8px 0 0',
                       }}
                     >
-                      <Typography variant="h3" sx={{ fontWeight: 800, lineHeight: 1 }}>
+                      <Typography variant="h3" sx={{ fontWeight: 800, lineHeight: 1, fontSize: '1.9rem' }}>
                         {dateDisplay.day}
                       </Typography>
-                      <Typography variant="subtitle2" sx={{ fontWeight: 600, letterSpacing: 1, opacity: 0.9 }}>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 600, letterSpacing: 1, color: today ? ink : accent }}>
                         {dateDisplay.month}
                       </Typography>
                       {dateDisplay.weekday && (
-                        <Typography variant="caption" sx={{ opacity: 0.8 }}>
+                        <Typography variant="caption" sx={{ opacity: 0.75 }}>
                           {dateDisplay.weekday}
                         </Typography>
                       )}
@@ -219,8 +211,8 @@ export default function Events() {
                           sx={{
                             fontWeight: 700,
                             fontSize: '0.7rem',
-                            backgroundColor: today ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.2)',
-                            color: 'white',
+                            backgroundColor: accent,
+                            color: ink,
                           }}
                         />
                       </Box>
@@ -228,12 +220,12 @@ export default function Events() {
 
                     {/* Content */}
                     <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                      <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main', mb: 1.5 }}>
+                      <Typography variant="h6" sx={{ fontSize: '1.1rem', mb: 1.5 }}>
                         {event.title}
                       </Typography>
 
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                        <AccessTimeIcon fontSize="small" color="secondary" />
+                        <AccessTimeIcon fontSize="small" sx={{ color: accent }} />
                         <Typography variant="body2" color="text.primary" fontWeight={500}>
                           {formatTime(event.start, event.end, event.allDay)}
                         </Typography>
@@ -241,7 +233,7 @@ export default function Events() {
 
                       {event.location && (
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
-                          <LocationOnIcon fontSize="small" color="secondary" />
+                          <LocationOnIcon fontSize="small" sx={{ color: accent }} />
                           <Typography variant="body2" color="text.primary" fontWeight={500}>
                             {event.location}
                           </Typography>
