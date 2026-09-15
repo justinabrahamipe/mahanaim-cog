@@ -9,8 +9,8 @@ import LeaderCard from './Components/LeaderCard';
 import { leaders } from '@/config/leaders';
 
 export default function Leadership() {
-  const pastors = leaders.filter((l) => l.type === 'pastor');
-  const officials = leaders.filter((l) => l.type === 'official');
+  const pastors = leaders.filter((l) => l.type === 'pastor').sort((a, b) => a.priority - b.priority);
+  const officials = leaders.filter((l) => l.type === 'official').sort((a, b) => a.priority - b.priority);
 
   return (
     <Page>

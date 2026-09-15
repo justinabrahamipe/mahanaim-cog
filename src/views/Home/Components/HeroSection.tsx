@@ -63,11 +63,12 @@ export default function HeroSection() {
         sx={{
           position: 'absolute',
           left: '50%',
-          bottom: { xs: 28, sm: 40, md: 64 },
-          transform: 'translateX(-50%)',
+          top: { xs: '50%', sm: 'auto' },
+          bottom: { xs: 'auto', sm: 40, md: 64 },
+          transform: { xs: 'translate(-50%, -50%)', sm: 'translateX(-50%)' },
           '@keyframes riseIn': {
-            from: { opacity: 0, transform: 'translateX(-50%) translateY(14px)' },
-            to: { opacity: 1, transform: 'translateX(-50%) translateY(0)' },
+            from: { opacity: 0 },
+            to: { opacity: 1 },
           },
           animation: 'riseIn 700ms ease both',
         }}
