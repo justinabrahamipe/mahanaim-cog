@@ -31,6 +31,7 @@ export interface ChurchInfo {
 }
 
 export interface Leader {
+  priority: number;
   name: string;
   designation: string;
   description: string;

@@ -1,23 +1,8 @@
 import { Leader } from '@/types';
+import leadershipData from '../../leadership.json';
 
-export const leaders: Leader[] = [
-  {
-    name: 'Pastor Biju Cherian',
-    designation: 'Senior Pastor',
-    description:
-      'Leading Mahanaim Church of God Manchester with a heart for worship, community, and the Word of God.',
-    imageUrl: '/mahanaim-logo.png',
-    type: 'pastor',
-    facebookUrl: 'https://www.facebook.com/mahanaimcog',
-  },
-  // Add more leaders here
-  // {
-  //   name: 'Name',
-  //   designation: 'Role',
-  //   description: 'Description',
-  //   imageUrl: '/mahanaim-logo.png',
-  //   type: 'official',
-  //   facebookUrl: '',
-  //   whatsappUrl: '',
-  // },
-];
+// Edit leadership.json (project root) to add/update leaders.
+// `priority` controls display order (lower number shows first).
+export const leaders: Leader[] = (leadershipData as Leader[])
+  .slice()
+  .sort((a, b) => a.priority - b.priority);
