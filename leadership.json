@@ -1,11 +1,292 @@
 [
   {
     "priority": 1,
-    "name": "Pastor Biju Cherian",
+    "name": "Pr. Biju Cherian",
     "designation": "Senior Pastor",
-    "description": "Leading Mahanaim Church of God Manchester with a heart for worship, community, and the Word of God.",
     "imageUrl": "/mahanaim-logo.png",
     "type": "pastor",
+    "phone": "+447411539877",
+    "whatsapp": "+447411539877",
     "facebookUrl": "https://www.facebook.com/mahanaimcog"
+  },
+  {
+    "priority": 2,
+    "name": "Pr. Blesson Sojan",
+    "designation": "Associate Pastor",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "pastor"
+  },
+  {
+    "priority": 3,
+    "name": "Evg. Soney C George",
+    "designation": "Associate Pastor",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "pastor"
+  },
+  {
+    "priority": 4,
+    "name": "Evg. Gibin Abraham",
+    "designation": "Associate Pastor",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "pastor"
+  },
+  {
+    "priority": 5,
+    "name": "Evg. Felix Gonsalves",
+    "designation": "Associate Pastor",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "pastor"
+  },
+  {
+    "priority": 10,
+    "name": "Br. Blesson Thomas",
+    "designation": "Finance",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 11,
+    "name": "Br. Jeffy John",
+    "designation": "Finance",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 12,
+    "name": "Evg. Felix Gonsalves",
+    "designation": "Sunday School and Youth Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 16,
+    "name": "Br. Justin Abraham Ipe",
+    "designation": "Youth Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 17,
+    "name": "Br. Reuben Cherian",
+    "designation": "Youth Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 18,
+    "name": "Br. Blesson Matthew",
+    "designation": "Youth Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 19,
+    "name": "Sr. Tinu Thomas",
+    "designation": "Youth Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 20,
+    "name": "Sr. Tintu Thomas",
+    "designation": "Youth Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 13,
+    "name": "Br. Justin George",
+    "designation": "Sunday School Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 14,
+    "name": "Sr. Blessey Soney",
+    "designation": "Sunday School Coordinator, Safeguarding Officer",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 15,
+    "name": "Sr. Chinnu Sam",
+    "designation": "Sunday School Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 21,
+    "name": "Br. Christow T Joseph",
+    "designation": "Live/Media Head",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 22,
+    "name": "Br. Sonu Varghese Mathew",
+    "designation": "Choir Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 24,
+    "name": "Br. Bino Matthew",
+    "designation": "Safeguarding Officer",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 25,
+    "name": "Sr. Betsy Antony",
+    "designation": "Safeguarding Officer",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 26,
+    "name": "Sr. Shiny Jose",
+    "designation": "Ladies Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 27,
+    "name": "Br. Sijo Zacharias",
+    "designation": "Outreach Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 28,
+    "name": "Sr. Sijina Sunny",
+    "designation": "Outreach Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 23,
+    "name": "Br. Jubin Paul",
+    "designation": "Event Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 8,
+    "name": "Br. Aby Babu",
+    "designation": "Admin",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 9,
+    "name": "Br. Noble Jacob",
+    "designation": "Admin",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 29,
+    "name": "Pr. Biju Cherian",
+    "designation": "CPC Member",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cpc"
+  },
+  {
+    "priority": 30,
+    "name": "Pr. Blesson Sojan",
+    "designation": "CPC Member",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cpc"
+  },
+  {
+    "priority": 31,
+    "name": "Br. Blesson Thomas",
+    "designation": "CPC Member",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cpc"
+  },
+  {
+    "priority": 32,
+    "name": "Br. Aby Babu",
+    "designation": "CPC Member",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cpc"
+  },
+  {
+    "priority": 33,
+    "name": "Br. Jubin Paul",
+    "designation": "CPC Member",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cpc"
+  },
+  {
+    "priority": 34,
+    "name": "Br. Sijo Zacharias",
+    "designation": "CPC Member",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cpc"
+  },
+  {
+    "priority": 35,
+    "name": "Br. Justin George",
+    "designation": "CPC Member",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cpc"
+  },
+  {
+    "priority": 36,
+    "name": "Br. Prince Matthew",
+    "designation": "CPC Member",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cpc"
+  },
+  {
+    "priority": 37,
+    "name": "Br. Sonu Varghese Mathew",
+    "designation": "Manchester City",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cell"
+  },
+  {
+    "priority": 38,
+    "name": "Br. Blesson Thomas",
+    "designation": "Partington",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cell"
+  },
+  {
+    "priority": 39,
+    "name": "Br. Noble Jacob",
+    "designation": "Clockworks",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cell"
+  },
+  {
+    "priority": 40,
+    "name": "Br. Saji Thampy",
+    "designation": "Salford",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cell"
+  },
+  {
+    "priority": 41,
+    "name": "TBC",
+    "designation": "Merseyside",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cell"
+  },
+  {
+    "priority": 42,
+    "name": "Br. Jickson George",
+    "designation": "Wigan",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cell"
+  },
+  {
+    "priority": 43,
+    "name": "Br. Jubin Paul",
+    "designation": "Middleton",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cell"
   }
 ]

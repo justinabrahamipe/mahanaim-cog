@@ -34,11 +34,11 @@ export interface Leader {
   priority: number;
   name: string;
   designation: string;
-  description: string;
   imageUrl: string;
-  type: 'pastor' | 'official';
+  type: 'pastor' | 'cpc' | 'official' | 'cell';
+  phone?: string;
+  whatsapp?: string;
   facebookUrl?: string;
-  whatsappUrl?: string;
 }
 
 export interface ContactMethod {
@@ -51,16 +51,14 @@ export interface ContactMethod {
 
 export interface ChurchContact {
   phone?: string;
+  contactNumbers?: string[];
   website?: string;
   instagram?: string;
   facebook?: string;
+  facebookLinks?: string[];
   whatsapp?: string;
-}
-
-export interface PastorInfo {
-  name: string;
-  phone?: string;
-  whatsapp?: string;
+  email?: string;
+  youtube?: string;
 }
 
 export interface SisterChurch {
@@ -69,9 +67,10 @@ export interface SisterChurch {
   pastor: string;
   pastorPhone?: string;
   pastorWhatsapp?: string;
-  associatePastors?: PastorInfo[];
   isMotherChurch?: boolean;
   contact?: ChurchContact;
+  photo?: string;
+  familyPhotoStatus?: string | null;
 }
 
 export interface CalendarEvent {

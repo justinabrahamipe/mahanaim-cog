@@ -12,6 +12,8 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LanguageIcon from '@mui/icons-material/Language';
+import EmailIcon from '@mui/icons-material/Email';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 import Page from '@/components/Page/Page';
 import PageBanner from '@/components/Page/Components/PageBanner';
 import PageTitle from '@/components/Page/Components/PageTitle';
@@ -23,36 +25,62 @@ function PersonCard({
   name,
   role,
   highlight,
+  photo,
   phone,
   whatsapp,
   facebook,
   instagram,
   website,
+  email,
+  youtube,
 }: {
   name: string;
   role: string;
   highlight?: boolean;
+  photo?: string;
   phone?: string;
   whatsapp?: string;
   facebook?: string;
   instagram?: string;
   website?: string;
+  email?: string;
+  youtube?: string;
 }) {
   return (
     <Card
       sx={{
         ...panelSx,
-        width: { xs: '100%', sm: 'calc(50% - 12px)', md: 'calc(25% - 18px)' },
+        width: {
+          xs: '100%',
+          sm: highlight ? '340px' : 'calc(50% - 12px)',
+          md: highlight ? '360px' : 'calc(25% - 18px)',
+        },
         textAlign: 'center',
         backgroundColor: 'background.paper',
+        border: highlight ? `2px solid ${accent}` : undefined,
+        boxShadow: highlight ? '0 10px 28px rgba(193, 50, 26, 0.22)' : undefined,
       }}
     >
-      <CardContent sx={{ p: 3 }}>
-        <Avatar sx={{ width: 76, height: 76, mx: 'auto', mb: 2, backgroundColor: highlight ? accent : ink }}>
-          <PersonIcon sx={{ fontSize: 38, color: highlight ? ink : '#F3EEE6' }} />
+      <CardContent sx={{ p: highlight ? 4 : 3 }}>
+        <Avatar
+          src={photo}
+          alt={name}
+          sx={{
+            width: highlight ? 100 : 76,
+            height: highlight ? 100 : 76,
+            mx: 'auto',
+            mb: 2,
+            backgroundColor: highlight ? accent : ink,
+          }}
+        >
+          <PersonIcon sx={{ fontSize: highlight ? 50 : 38, color: highlight ? ink : '#F3EEE6' }} />
         </Avatar>
-        <Typography sx={{ fontWeight: 700, fontSize: '1.05rem' }}>{name}</Typography>
-        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1.5 }}>
+        <Typography sx={{ fontWeight: 700, fontSize: highlight ? '1.3rem' : '1.05rem' }}>{name}</Typography>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ display: 'block', mb: 1.5, fontSize: highlight ? '0.9rem' : undefined }}
+        >
           {role}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.5, flexWrap: 'wrap' }}>
@@ -87,6 +115,16 @@ function PersonCard({
               <LanguageIcon fontSize="small" />
             </IconButton>
           )}
+          {youtube && (
+            <IconButton href={youtube} target="_blank" rel="noopener noreferrer" size="small" sx={{ color: 'text.secondary', '&:hover': { color: accent } }}>
+              <YouTubeIcon fontSize="small" />
+            </IconButton>
+          )}
+          {email && (
+            <IconButton href={`mailto:${email}`} size="small" sx={{ color: 'text.secondary', '&:hover': { color: accent } }}>
+              <EmailIcon fontSize="small" />
+            </IconButton>
+          )}
         </Box>
       </CardContent>
     </Card>
@@ -108,13 +146,22 @@ export default function Churches() {
           {motherChurch && (
             <Box sx={{ mb: 8 }}>
               <Typography variant="h5" sx={{ fontSize: '1.3rem', mb: 4 }}>
-                Mother Church
+                Manchester Church
               </Typography>
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
-                <PersonCard name={motherChurch.pastor} role="Senior Pastor" highlight phone={motherChurch.pastorPhone} whatsapp={motherChurch.pastorWhatsapp} />
-                {motherChurch.associatePastors?.map((pastor) => (
-                  <PersonCard key={pastor.name} name={pastor.name} role="Associate Pastor" phone={pastor.phone} whatsapp={pastor.whatsapp} />
-                ))}
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <PersonCard
+                  name={motherChurch.pastor}
+                  role="Senior Pastor"
+                  highlight
+                  photo={motherChurch.photo}
+                  phone={motherChurch.pastorPhone}
+                  whatsapp={motherChurch.pastorWhatsapp}
+                  facebook={motherChurch.contact?.facebook}
+                  instagram={motherChurch.contact?.instagram}
+                  website={motherChurch.contact?.website}
+                  email={motherChurch.contact?.email}
+                  youtube={motherChurch.contact?.youtube}
+                />
               </Box>
             </Box>
           )}
@@ -128,11 +175,14 @@ export default function Churches() {
                 key={church.location}
                 name={church.location}
                 role={church.pastor || ''}
+                photo={church.photo}
                 phone={church.contact?.phone}
                 whatsapp={church.contact?.whatsapp}
                 facebook={church.contact?.facebook}
                 instagram={church.contact?.instagram}
                 website={church.contact?.website}
+                email={church.contact?.email}
+                youtube={church.contact?.youtube}
               />
             ))}
           </Box>
