@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
+import PhoneIcon from '@mui/icons-material/Phone';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { panelSx } from '@/theme/motif';
@@ -28,10 +29,27 @@ export default function LeaderCard({ leader }: LeaderCardProps) {
         <Typography sx={{ color: accent, mb: 2, fontWeight: 600, fontSize: '0.9rem' }}>
           {leader.designation}
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7, mb: 2 }}>
-          {leader.description}
-        </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
+          {leader.phone && (
+            <IconButton
+              href={`tel:${leader.phone}`}
+              size="small"
+              sx={{ color: 'text.primary', '&:hover': { color: accent } }}
+            >
+              <PhoneIcon />
+            </IconButton>
+          )}
+          {leader.whatsapp && (
+            <IconButton
+              href={`https://wa.me/${leader.whatsapp.replace('+', '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              size="small"
+              sx={{ color: 'text.primary', '&:hover': { color: accent } }}
+            >
+              <WhatsAppIcon />
+            </IconButton>
+          )}
           {leader.facebookUrl && (
             <IconButton
               href={leader.facebookUrl}
@@ -41,17 +59,6 @@ export default function LeaderCard({ leader }: LeaderCardProps) {
               sx={{ color: 'text.primary', '&:hover': { color: accent } }}
             >
               <FacebookIcon />
-            </IconButton>
-          )}
-          {leader.whatsappUrl && (
-            <IconButton
-              href={leader.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              size="small"
-              sx={{ color: 'text.primary', '&:hover': { color: accent } }}
-            >
-              <WhatsAppIcon />
             </IconButton>
           )}
         </Box>

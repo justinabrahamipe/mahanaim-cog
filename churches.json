@@ -1,0 +1,159 @@
+[
+  {
+    "name": "Mahanaim Church of God Manchester",
+    "location": "Manchester",
+    "pastor": "Pr. Biju Cherian",
+    "pastorPhone": "+447411539877",
+    "pastorWhatsapp": "+447411539877",
+    "isMotherChurch": true,
+    "contact": {
+      "phone": "+447411539877",
+      "whatsapp": "+447411539877",
+      "facebook": "https://www.facebook.com/mahanaimcog",
+      "instagram": "https://www.instagram.com/mahanaim_church_manchester/",
+      "website": "https://mahanaimchurch.com"
+    },
+    "photo": "/churches_photos/manchester.jpg",
+    "familyPhotoStatus": null
+  },
+  {
+    "name": "Mahanaim Church of God Telford",
+    "location": "Telford",
+    "pastor": "Pr. Rejoy Stephan",
+    "contact": {
+      "phone": "+44 7538 917310",
+      "whatsapp": "+44 7538 917310",
+      "email": "mahanaimcogtelford@gmail.com",
+      "website": "www.mahanaimcogtelford.co.uk",
+      "youtube": "https://youtube.com/@mahanaimcogtelford?si=M0kPcNvBFbMQ-W2q",
+      "facebook": "https://www.facebook.com/share/1ChBohfftM/",
+      "facebookLinks": ["https://www.facebook.com/share/1ChBohfftM/"],
+      "instagram": "https://www.instagram.com/mahanaim_telford_church?igsh=ejQxeTV4YmZmZXpm"
+    },
+    "familyPhotoStatus": null
+  },
+  {
+    "name": "Mahanaim Church of God Keighley",
+    "location": "Keighley",
+    "pastor": "Evg. Prince Varughese",
+    "contact": {
+      "phone": "07721545109",
+      "whatsapp": "07721545109",
+      "email": "keighleymahanaimchurchofgod@gmail.com",
+      "facebook": "https://www.facebook.com/share/1HFL3u2kLm/",
+      "facebookLinks": ["https://www.facebook.com/share/1HFL3u2kLm/"]
+    },
+    "familyPhotoStatus": "Pending"
+  },
+  {
+    "name": "Mahanaim Burnley Church of God",
+    "location": "Burnley",
+    "pastor": "Evg. Ajeesh Mathew",
+    "contact": {
+      "phone": "+447799022048",
+      "whatsapp": "+447799022048",
+      "email": "mahanaimburnleycog@gmail.com",
+      "facebook": "https://www.facebook.com/share/1ArzuXf8da/",
+      "facebookLinks": [
+        "https://www.facebook.com/share/1ArzuXf8da/",
+        "https://www.facebook.com/share/1BzZ5SpUNV/"
+      ]
+    },
+    "photo": "/churches_photos/burnley.jpg",
+    "familyPhotoStatus": "Received"
+  },
+  {
+    "name": "Mahanaim Church of God Shrewsbury",
+    "location": "Shrewsbury",
+    "pastor": "Evg. Blubin John",
+    "contact": {
+      "phone": "+447423779816",
+      "whatsapp": "+447423779816",
+      "email": "mahanaimshrewsbury@gmail.com",
+      "facebook": "https://www.facebook.com/share/p/1ELvFfC9XL/",
+      "facebookLinks": ["https://www.facebook.com/share/p/1ELvFfC9XL/"]
+    },
+    "familyPhotoStatus": "Will send soon"
+  },
+  {
+    "name": "Mahanaim Immanuel Pentecostal Church of God Ludlow",
+    "location": "Ludlow",
+    "pastor": "Evg. John K Joy",
+    "contact": {
+      "phone": "+447741500318",
+      "whatsapp": "+447741500318",
+      "email": "cogludlow@gmail.com",
+      "facebook": "https://www.facebook.com/share/1Za5oxPHpq/",
+      "facebookLinks": ["https://www.facebook.com/share/1Za5oxPHpq/"]
+    },
+    "familyPhotoStatus": "Will send soon"
+  },
+  {
+    "name": "Mahanaim Church of God Preston",
+    "location": "Preston",
+    "pastor": "Evg. Allan Chacko",
+    "familyPhotoStatus": null
+  },
+  {
+    "name": "Mahanaim Church of God Bolton",
+    "location": "Bolton",
+    "pastor": "Evg. Bino Mathew",
+    "contact": {
+      "phone": "07899 891863",
+      "whatsapp": "07899 891863",
+      "contactNumbers": ["07899 891863", "07442644626"],
+      "email": "mahanaimboltonhindichurch@gmail.com",
+      "youtube": "https://youtube.com/@mahanaimboltonhindichurch?si=S1cFN4JAGOe-5zDD",
+      "facebook": "https://www.facebook.com/share/1KPNXkpWqj/",
+      "facebookLinks": ["https://www.facebook.com/share/1KPNXkpWqj/"],
+      "instagram": "https://www.instagram.com/mahanaim_cog_bolton?igsh=MTN4bHpueXRmOWRmeg=="
+    },
+    "familyPhotoStatus": null
+  },
+  {
+    "name": "Mahanaim Church of God Crewe",
+    "location": "Crewe",
+    "pastor": "Pr. Blesson Sojan",
+    "contact": {
+      "phone": "+44 7423036630",
+      "whatsapp": "+44 7423036630",
+      "email": "mahanaimcogcrewe@gmail.com",
+      "facebook": "https://www.facebook.com/share/18Z6SrJiuP/?mibextid=wwXIfr",
+      "facebookLinks": ["https://www.facebook.com/share/18Z6SrJiuP/?mibextid=wwXIfr"],
+      "instagram": "https://www.instagram.com/mahanaim_crewe_church?igsh=d3dqMGdienM3Y21i&utm_source=qr"
+    },
+    "photo": "/churches_photos/crewe.jpg",
+    "familyPhotoStatus": "Received"
+  },
+  {
+    "name": "Mahanaim Church of God Bradford",
+    "location": "Bradford",
+    "pastor": "Evg. Prince George",
+    "familyPhotoStatus": null
+  },
+  {
+    "name": "Mahanaim Church of God Warrington",
+    "location": "Warrington",
+    "pastor": "Evg. Gibin Abraham",
+    "contact": {
+      "phone": "+447404357921",
+      "whatsapp": "+447404357921",
+      "email": "mahanaimcogwarrington@gmail.com",
+      "facebook": "https://www.facebook.com/share/1CmnLcx7wb/",
+      "facebookLinks": ["https://www.facebook.com/share/1CmnLcx7wb/"]
+    },
+    "familyPhotoStatus": "Will send soon"
+  },
+  {
+    "name": "Mahanaim Church of God Dolgellau",
+    "location": "Dolgellau, North Wales",
+    "pastor": "Evg. Stanly Stephen",
+    "familyPhotoStatus": null
+  },
+  {
+    "name": "Mahanaim Church of God Bangor",
+    "location": "Bangor, North Wales",
+    "pastor": "Br. Johncy Koshy",
+    "familyPhotoStatus": null
+  }
+]
