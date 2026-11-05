@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
+import ScrollThread from './Components/ScrollThread';
 
 interface PageProps {
   children: React.ReactNode;
@@ -12,7 +13,13 @@ interface PageProps {
 
 export default function Page({ children, snap, transparentHeader }: PageProps) {
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Honour deep links such as /churches#bangor; otherwise start at the top.
+    const target = window.location.hash && document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+    if (target) {
+      target.scrollIntoView();
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, []);
 
   return (
@@ -36,6 +43,7 @@ export default function Page({ children, snap, transparentHeader }: PageProps) {
         component="main"
         sx={{
           flex: 1,
+          position: 'relative',
           ...(snap && {
             '& > *': {
               scrollSnapAlign: 'start',
@@ -43,6 +51,7 @@ export default function Page({ children, snap, transparentHeader }: PageProps) {
           }),
         }}
       >
+        {!snap && <ScrollThread />}
         {children}
       </Box>
       <Footer />

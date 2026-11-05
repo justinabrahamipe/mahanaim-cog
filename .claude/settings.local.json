@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:mahanaimcogtelford.co.uk)",
+      "Bash(yarn add @mui/material @mui/icons-material @emotion/react @emotion/styled)",
+      "Bash(yarn dev)",
+      "WebFetch(domain:www.google.com)",
+      "WebSearch",
+      "Bash(yarn dev --hostname 0.0.0.0)",
+      "Bash(find:*)",
+      "Bash(xargs cat:*)",
+      "Bash(yarn install)",
+      "Bash(yarn next --version)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

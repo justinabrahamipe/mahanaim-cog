@@ -1,68 +1,92 @@
 'use client';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import PhoneIcon from '@mui/icons-material/Phone';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import { panelSx } from '@/theme/motif';
-import { accent } from '@/theme/tokens';
+import Image from 'next/image';
+import ContactLinks from '@/components/ContactLinks/ContactLinks';
+import { gold, wineGlowBg, wineShadow } from '@/theme/tokens';
 import { Leader } from '@/types';
 
-interface LeaderCardProps {
-  leader: Leader;
+const PLACEHOLDER_IMAGE = '/mahanaim-logo.png';
+
+const contactOf = (leader: Leader) => ({
+  phone: leader.phone,
+  whatsapp: leader.whatsapp,
+  facebook: leader.facebookUrl,
+});
+
+// "Evg. Gibin Abraham" -> "GA"
+const initials = (name: string) =>
+  name
+    .replace(/^(Pr|Evg|Br|Sr|Rev|Dr)\.?\s+/i, '')
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+
+// Pastoral team: portrait card.
+export default function LeaderCard({ leader }: { leader: Leader }) {
+  const hasPhoto = leader.imageUrl && leader.imageUrl !== PLACEHOLDER_IMAGE;
+
+  return (
+    <Box component="article" sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box
+        sx={{
+          position: 'relative',
+          aspectRatio: '4 / 5',
+          borderRadius: '24px',
+          overflow: 'hidden',
+          mb: 2,
+          boxShadow: wineShadow,
+          background: wineGlowBg,
+          display: 'grid',
+          placeItems: 'center',
+        }}
+      >
+        {hasPhoto ? (
+          <Image
+            src={leader.imageUrl}
+            alt={leader.name}
+            fill
+            sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 280px"
+            style={{ objectFit: 'cover', objectPosition: 'center top' }}
+          />
+        ) : (
+          <Typography aria-hidden sx={{ color: gold, fontWeight: 300, fontSize: '4rem', letterSpacing: '-0.04em' }}>
+            {initials(leader.name)}
+          </Typography>
+        )}
+      </Box>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '1.15rem' }}>
+        {leader.name}
+      </Typography>
+      <Typography sx={{ color: 'secondary.main', fontWeight: 500, fontSize: '0.92rem', mb: 1.5 }}>{leader.designation}</Typography>
+      <ContactLinks contact={contactOf(leader)} label={leader.name} />
+    </Box>
+  );
 }
 
-export default function LeaderCard({ leader }: LeaderCardProps) {
+// Everyone else: name, role and contact links, no photo.
+export function LeaderRow({ leader }: { leader: Leader }) {
   return (
-    <Card sx={{ ...panelSx, height: '100%', textAlign: 'center', backgroundColor: 'background.paper' }}>
-      <CardContent sx={{ p: 3 }}>
-        <Avatar
-          src={leader.imageUrl}
-          alt={leader.name}
-          sx={{ width: 112, height: 112, mx: 'auto', mb: 2, border: '2px solid', borderColor: 'text.primary' }}
-        />
-        <Typography sx={{ fontWeight: 700, fontSize: '1.1rem' }}>{leader.name}</Typography>
-        <Typography sx={{ color: accent, mb: 2, fontWeight: 600, fontSize: '0.9rem' }}>
-          {leader.designation}
-        </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
-          {leader.phone && (
-            <IconButton
-              href={`tel:${leader.phone}`}
-              size="small"
-              sx={{ color: 'text.primary', '&:hover': { color: accent } }}
-            >
-              <PhoneIcon />
-            </IconButton>
-          )}
-          {leader.whatsapp && (
-            <IconButton
-              href={`https://wa.me/${leader.whatsapp.replace('+', '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              size="small"
-              sx={{ color: 'text.primary', '&:hover': { color: accent } }}
-            >
-              <WhatsAppIcon />
-            </IconButton>
-          )}
-          {leader.facebookUrl && (
-            <IconButton
-              href={leader.facebookUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              size="small"
-              sx={{ color: 'text.primary', '&:hover': { color: accent } }}
-            >
-              <FacebookIcon />
-            </IconButton>
-          )}
-        </Box>
-      </CardContent>
-    </Card>
+    <Box
+      component="li"
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: 2,
+        py: 1.75,
+        borderBottom: '1px solid',
+        borderColor: 'divider',
+      }}
+    >
+      <Box sx={{ minWidth: 0 }}>
+        <Typography sx={{ fontWeight: 600 }}>{leader.name}</Typography>
+        <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>{leader.designation}</Typography>
+      </Box>
+      <ContactLinks contact={contactOf(leader)} label={leader.name} />
+    </Box>
   );
 }

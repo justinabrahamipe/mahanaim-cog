@@ -2,74 +2,65 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import { panelSx } from '@/theme/motif';
-import { accent, ink } from '@/theme/tokens';
+import Image from 'next/image';
+import { Eyebrow } from '@/components/Page/Components/SectionHeading';
+import { tintedSectionSx } from '@/theme/motif';
+import { wineShadow } from '@/theme/tokens';
 
 export default function PastorMessage() {
   return (
-    <Box component="section" sx={{ py: { xs: 8, md: 12 }, backgroundColor: 'background.paper' }}>
+    <Box component="section" sx={{ py: { xs: 9, md: 12 }, ...tintedSectionSx }}>
       <Container maxWidth="lg">
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: '260px 1fr' },
-            gap: { xs: 5, md: 7 },
-            alignItems: 'start',
+            gridTemplateColumns: { xs: '1fr', md: '5fr 7fr' },
+            gap: { xs: 5, md: 9 },
+            alignItems: 'center',
           }}
         >
-          <Box sx={{ textAlign: 'center' }}>
-            <Avatar
+          <Box
+            sx={{
+              position: 'relative',
+              aspectRatio: '4 / 5',
+              maxWidth: { xs: 340, md: 'none' },
+              borderRadius: '28px',
+              overflow: 'hidden',
+              boxShadow: wineShadow,
+            }}
+          >
+            <Image
               src="/leaders_photos/biju_cherian.jpg"
-              alt="Pr. Biju Cherian"
-              sx={{
-                width: { xs: 140, md: 200 },
-                height: { xs: 140, md: 200 },
-                mx: 'auto',
-                mb: 2.5,
-                border: '3px solid',
-                borderColor: 'text.primary',
-              }}
+              alt="Pastor Biju Cherian"
+              fill
+              sizes="(max-width: 900px) 340px, 420px"
+              style={{ objectFit: 'cover', objectPosition: 'center top' }}
             />
-            <Typography sx={{ fontWeight: 700, fontSize: '1.15rem' }}>Pr. Biju Cherian</Typography>
-            <Typography sx={{ color: accent, fontWeight: 600, fontSize: '0.9rem' }}>Senior Pastor</Typography>
           </Box>
 
           <Box>
+            <Eyebrow>A word from our pastor</Eyebrow>
             <Typography
-              variant="h3"
-              sx={{ fontSize: { xs: '1.9rem', md: '2.3rem' }, mb: 3, color: accent }}
-            >
-              Greetings
-            </Typography>
-            <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 2, fontSize: '1.05rem' }}>
-              I am glad you are here to know about our church. I wholeheartedly welcome you to attend
-              our worship service and experience the touch and power of God.
-            </Typography>
-            <Typography sx={{ fontWeight: 600, mb: 4, fontSize: '1.05rem' }}>
-              Thank you and God bless you.
-            </Typography>
-
-            <Box
+              component="blockquote"
               sx={{
-                ...panelSx,
-                borderLeft: `4px solid ${accent}`,
-                borderRadius: '3px',
-                p: { xs: 2.5, md: 3 },
-                backgroundColor: 'background.default',
+                fontWeight: 300,
+                fontSize: { xs: '1.9rem', md: '2.6rem' },
+                letterSpacing: '-0.03em',
+                lineHeight: 1.18,
+                mb: 3.5,
               }}
             >
-              <Typography
-                sx={{
-                  fontStyle: 'italic',
-                  fontWeight: 600,
-                  fontSize: { xs: '1rem', md: '1.1rem' },
-                  color: (theme) => (theme.palette.mode === 'light' ? ink : 'text.primary'),
-                }}
-              >
-                &ldquo;Come as you are, leave changed by His grace&rdquo;
-              </Typography>
-            </Box>
+              &ldquo;Come as you are, and leave changed by His grace.&rdquo;
+            </Typography>
+            <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, fontSize: '1.05rem', mb: 2, maxWidth: 560 }}>
+              I am glad you are here to learn about our church. I warmly welcome you to join our worship service and
+              experience the touch and power of God.
+            </Typography>
+            <Typography sx={{ color: 'text.secondary', lineHeight: 1.8, fontSize: '1.05rem', mb: 4 }}>
+              Thank you, and God bless you.
+            </Typography>
+            <Typography sx={{ fontWeight: 600, fontSize: '1.1rem' }}>Pr. Biju Cherian</Typography>
+            <Typography sx={{ color: 'secondary.main', fontWeight: 500, fontSize: '0.92rem' }}>Senior Pastor</Typography>
           </Box>
         </Box>
       </Container>

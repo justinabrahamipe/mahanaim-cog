@@ -1,8 +1,9 @@
 'use client';
 import IconButton from '@mui/material/IconButton';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import { useThemeContext } from '@/theme/ThemeContext';
+import { onWineMuted } from '@/theme/tokens';
 
 export default function ThemeToggle() {
   const { mode, toggleTheme } = useThemeContext();
@@ -10,16 +11,13 @@ export default function ThemeToggle() {
   return (
     <IconButton
       sx={{
-        ml: 1,
-        color: 'secondary.main',
-        '&:hover': {
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        },
+        color: onWineMuted,
+        '&:hover': { color: '#FFFFFF', backgroundColor: 'rgba(255, 255, 255, 0.08)' },
       }}
       onClick={toggleTheme}
-      aria-label="Toggle theme"
+      aria-label={mode === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
     >
-      {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      {mode === 'dark' ? <LightModeOutlinedIcon fontSize="small" /> : <DarkModeOutlinedIcon fontSize="small" />}
     </IconButton>
   );
 }

@@ -3,165 +3,183 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import Image from 'next/image';
 import Link from 'next/link';
 import { churchInfo } from '@/config/church';
-import { ink } from '@/theme/tokens';
+import { ink, wineDeep, gold, creamText, onWineMuted } from '@/theme/tokens';
+import type { ServiceTime } from '@/types';
+
+// "9:15 AM - 10:00 AM" -> { start: '9:15', meridiem: 'AM', until: '10:00 AM', minutes: 555 }
+function splitTime(time: string) {
+  const [startPart, endPart] = time.split('-').map((t) => t.trim());
+  const match = startPart.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!match) return null;
+  const [, h, m, meridiem] = match;
+  const hour24 = (Number(h) % 12) + (meridiem.toUpperCase() === 'PM' ? 12 : 0);
+  return { start: `${h}:${m}`, meridiem: meridiem.toUpperCase(), until: endPart, minutes: hour24 * 60 + Number(m) };
+}
+
+export function sundayServicesInOrder(services: ServiceTime[]) {
+  return services
+    .filter((s) => s.day === 'Sunday')
+    .map((s) => ({ ...s, parsed: splitTime(s.time) }))
+    .filter((s) => s.parsed)
+    .sort((a, b) => a.parsed!.minutes - b.parsed!.minutes);
+}
 
 export default function HeroSection() {
-  const sundayServices = churchInfo.services.filter(
-    (s) => s.title.includes('English Worship') || s.title.includes('Malayalam')
-  );
+  const sundays = sundayServicesInOrder(churchInfo.services);
 
   return (
     <Box
       component="section"
       sx={{
         position: 'relative',
-        height: { xs: '92vh', sm: '92vh', md: '100vh' },
-        minHeight: { xs: 600, md: 700 },
-        maxHeight: { md: 920 },
-        width: '100%',
+        minHeight: { xs: '100svh', md: '100vh' },
+        maxHeight: { md: 980 },
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
         overflow: 'hidden',
-        backgroundColor: ink,
+        backgroundColor: wineDeep,
+        color: creamText,
       }}
     >
-      {/* The photo, in its natural colour */}
       <Image
         src="/church-group.jpg"
         alt="The Mahanaim congregation gathered together outdoors"
         fill
         priority
         sizes="100vw"
-        style={{
-          objectFit: 'cover',
-          objectPosition: 'center 68%',
-        }}
+        style={{ objectFit: 'cover', objectPosition: 'center 65%' }}
       />
-      {/* Ink wash, just enough to keep the overlaid type legible */}
-      <Box sx={{ position: 'absolute', inset: 0, backgroundColor: ink, mixBlendMode: 'multiply', opacity: 0.58 }} />
-      {/* Just enough scrim at the very top/bottom for nav and type legibility */}
+      {/* Wine wash: tints the photo into the brand colour while keeping faces readable */}
+      <Box sx={{ position: 'absolute', inset: 0, backgroundColor: ink, mixBlendMode: 'multiply', opacity: 0.55 }} />
       <Box
         sx={{
           position: 'absolute',
           inset: 0,
-          background:
-            'linear-gradient(to bottom, rgba(20,16,14,0.55) 0%, transparent 18%), linear-gradient(to top, rgba(10,8,7,0.85) 0%, rgba(10,8,7,0.55) 30%, transparent 55%)',
-        }}
-      />
-      {/* Vignette: darkens in from all four sides, keeping the centre brightest */}
-      <Box
-        sx={{
-          position: 'absolute',
-          inset: 0,
-          background: 'radial-gradient(ellipse at center, transparent 22%, rgba(8,6,5,0.85) 100%)',
+          background: [
+            'radial-gradient(50% 60% at 0% 100%, rgba(242, 160, 80, 0.12) 0%, transparent 70%)',
+            `linear-gradient(to top, ${wineDeep} 0%, rgba(42, 17, 21, 0.82) 30%, rgba(42, 17, 21, 0.2) 65%, rgba(42, 17, 21, 0.55) 100%)`,
+          ].join(', '),
         }}
       />
 
       <Container
         maxWidth="lg"
         sx={{
-          position: 'absolute',
-          left: '50%',
-          top: { xs: '50%', sm: 'auto' },
-          bottom: { xs: 'auto', sm: 40, md: 64 },
-          transform: { xs: 'translate(-50%, -50%)', sm: 'translateX(-50%)' },
-          '@keyframes riseIn': {
-            from: { opacity: 0 },
-            to: { opacity: 1 },
+          position: 'relative',
+          pt: { xs: 14, md: 18 },
+          pb: { xs: 3, md: 5 },
+          '@keyframes heroIn': {
+            from: { opacity: 0, transform: 'translateY(14px)' },
+            to: { opacity: 1, transform: 'none' },
           },
-          animation: 'riseIn 700ms ease both',
+          '& > *': { animation: 'heroIn 800ms cubic-bezier(.2,.7,.2,1) both' },
+          '& > *:nth-of-type(2)': { animationDelay: '120ms' },
+          '& > *:nth-of-type(3)': { animationDelay: '240ms' },
+          '& > *:nth-of-type(4)': { animationDelay: '380ms' },
         }}
       >
-        {/* Glass panel: frosted, tinted with the accent, solidifies slightly on hover */}
-        <Box
+        <Typography sx={{ color: gold, fontWeight: 600, mb: 2 }}>Mahanaim Church of God, Manchester</Typography>
+
+        <Typography
+          variant="h1"
           sx={{
-            display: 'inline-block',
-            color: '#F3EEE6',
-            p: { xs: 3, sm: 4, md: 5 },
-            borderRadius: '6px',
-            border: '1px solid rgba(243,238,230,0.18)',
-            backgroundColor: 'rgba(120, 35, 22, 0.44)',
-            backdropFilter: 'blur(16px) saturate(160%)',
-            WebkitBackdropFilter: 'blur(16px) saturate(160%)',
-            transition: 'background-color 300ms ease, border-color 300ms ease',
-            '&:hover': {
-              backgroundColor: 'rgba(120, 35, 22, 0.6)',
-              borderColor: 'rgba(243,238,230,0.3)',
-            },
+            fontSize: { xs: '2.9rem', sm: '4rem', md: '5.4rem' },
+            lineHeight: { xs: 1.04, md: 1 },
+            letterSpacing: '-0.04em',
+            maxWidth: 900,
+            mb: 3,
           }}
         >
-          <Typography sx={{ fontWeight: 600, fontSize: '0.9rem', color: 'rgba(243,238,230,0.8)', mb: 2 }}>
-            Mahanaim Church of God, Manchester
-          </Typography>
+          Worship with us this Sunday in Manchester
+        </Typography>
 
-          <Typography
-            variant="h1"
-            sx={{ fontSize: { xs: '3rem', sm: '4rem', md: '5.5rem' }, lineHeight: 0.95, fontWeight: 700, mb: 2 }}
-          >
-            Mahanaim
+        <Box sx={{ maxWidth: 560 }}>
+          <Typography sx={{ fontSize: { xs: '1.02rem', md: '1.15rem' }, lineHeight: 1.65, color: onWineMuted, mb: 4 }}>
+            English and Malayalam-speaking families gather here as one congregation under Pastor{' '}
+            {churchInfo.pastor}. Come as you are.
           </Typography>
-
-          <Typography
-            sx={{
-              fontSize: { xs: '0.98rem', md: '1.08rem' },
-              lineHeight: 1.65,
-              color: 'rgba(243,238,230,0.82)',
-              maxWidth: 560,
-              mb: 4,
-            }}
-          >
-            English and Malayalam-speaking believers gather here as one congregation, week after
-            week, under Pastor Biju Cherian. Come and see what that looks like on a Sunday.
-          </Typography>
-
-          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: sundayServices.length ? 4 : 0 }}>
-            <Button
-              variant="contained"
-              size="large"
-              component={Link}
-              href="/contact"
-              sx={{ backgroundColor: '#F3EEE6', color: ink, '&:hover': { backgroundColor: '#fff' } }}
-            >
-              Contact us
+          <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap', mb: { xs: 5, md: 7 } }}>
+            <Button component={Link} href="#visit" variant="contained" color="secondary" size="large">
+              Plan a visit
             </Button>
             <Button
-              variant="outlined"
-              size="large"
               component={Link}
               href="/sermons"
+              variant="outlined"
+              size="large"
               sx={{
-                borderColor: 'rgba(243,238,230,0.6)',
-                color: '#F3EEE6',
-                '&:hover': { borderColor: '#F3EEE6', backgroundColor: 'rgba(243,238,230,0.08)' },
+                color: creamText,
+                borderColor: 'rgba(251, 244, 239, 0.45)',
+                '&:hover': { borderColor: creamText, backgroundColor: 'rgba(251, 244, 239, 0.08)' },
               }}
             >
-              Watch a message
+              Watch a sermon
             </Button>
           </Box>
+        </Box>
 
-          {sundayServices.length > 0 && (
+        {sundays.length > 0 && (
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr 1fr', md: `1.3fr repeat(${sundays.length}, 1fr)` },
+              borderRadius: '22px',
+              border: '1px solid rgba(251, 244, 239, 0.16)',
+              backgroundColor: 'rgba(75, 30, 38, 0.55)',
+              backdropFilter: 'blur(18px) saturate(140%)',
+              WebkitBackdropFilter: 'blur(18px) saturate(140%)',
+              overflow: 'hidden',
+            }}
+          >
             <Box
               sx={{
+                gridColumn: { xs: '1 / -1', md: 'auto' },
                 display: 'flex',
-                gap: { xs: 3, sm: 5 },
-                flexWrap: 'wrap',
-                pt: 3,
-                borderTop: '1.5px solid rgba(243,238,230,0.25)',
-                maxWidth: 560,
+                gap: 1.25,
+                p: { xs: 2.5, md: 3 },
+                borderBottom: { xs: '1px solid rgba(251, 244, 239, 0.12)', md: 'none' },
               }}
             >
-              {sundayServices.map((service) => (
-                <Box key={service.title}>
-                  <Typography sx={{ fontWeight: 700, fontSize: '0.85rem' }}>{service.title}</Typography>
-                  <Typography sx={{ color: 'rgba(243,238,230,0.75)', fontWeight: 600, fontSize: '0.85rem' }}>
-                    {service.time}
-                  </Typography>
-                </Box>
-              ))}
+              <LocationOnOutlinedIcon sx={{ color: gold, fontSize: 20, mt: '2px' }} />
+              <Box>
+                <Typography sx={{ color: gold, fontWeight: 600, fontSize: '0.88rem' }}>Every Sunday</Typography>
+                <Typography sx={{ fontSize: '0.92rem', color: onWineMuted, lineHeight: 1.5, mt: 0.5 }}>
+                  {churchInfo.address}
+                </Typography>
+              </Box>
             </Box>
-          )}
-        </Box>
+            {sundays.map((service, i) => (
+              <Box
+                key={service.title}
+                sx={{
+                  p: { xs: 2.5, md: 3 },
+                  borderLeft: {
+                    xs: i % 2 === 1 ? '1px solid rgba(251, 244, 239, 0.12)' : 'none',
+                    md: '1px solid rgba(251, 244, 239, 0.12)',
+                  },
+                  borderTop: { xs: i >= 2 ? '1px solid rgba(251, 244, 239, 0.12)' : 'none', md: 'none' },
+                  gridColumn: { xs: i === sundays.length - 1 && i % 2 === 0 ? '1 / -1' : 'auto', md: 'auto' },
+                }}
+              >
+                <Typography sx={{ fontWeight: 300, letterSpacing: '-0.03em', fontSize: { xs: '2rem', md: '2.4rem' }, lineHeight: 1 }}>
+                  {service.parsed!.start}
+                  <Box component="span" sx={{ color: gold, fontSize: '0.8rem', fontWeight: 600, letterSpacing: 0, ml: 0.75 }}>
+                    {service.parsed!.meridiem}
+                  </Box>
+                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: '0.95rem', mt: 1 }}>{service.title}</Typography>
+                {service.parsed!.until && (
+                  <Typography sx={{ fontSize: '0.82rem', color: onWineMuted }}>Until {service.parsed!.until}</Typography>
+                )}
+              </Box>
+            ))}
+          </Box>
+        )}
       </Container>
     </Box>
   );

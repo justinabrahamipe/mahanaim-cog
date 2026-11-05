@@ -1,17 +1,16 @@
 'use client';
 import { createTheme } from '@mui/material/styles';
 import {
-  ink,
+  wineDeep,
   inkSurfaceDark,
   creamText,
-  accent,
-  accentDark,
   accentLight,
+  accentDark,
+  gold,
   lineDark,
   textSecondaryDark,
-  displayFontStack,
-  bodyFontStack,
 } from './tokens';
+import { sharedThemeOptions } from './lightTheme';
 
 export const darkTheme = createTheme({
   palette: {
@@ -19,17 +18,17 @@ export const darkTheme = createTheme({
     primary: {
       main: creamText,
       light: '#FFFFFF',
-      dark: '#C9BFB2',
-      contrastText: ink,
+      dark: '#DCCBC6',
+      contrastText: wineDeep,
     },
     secondary: {
-      main: accent,
+      main: gold,
       light: accentLight,
       dark: accentDark,
-      contrastText: ink,
+      contrastText: wineDeep,
     },
     background: {
-      default: ink,
+      default: wineDeep,
       paper: inkSurfaceDark,
     },
     divider: lineDark,
@@ -37,49 +36,7 @@ export const darkTheme = createTheme({
       primary: creamText,
       secondary: textSecondaryDark,
     },
+    grey: { 50: '#2E1418' },
   },
-  shape: { borderRadius: 3 },
-  typography: {
-    fontFamily: bodyFontStack,
-    h1: { fontFamily: displayFontStack, fontWeight: 700 },
-    h2: { fontFamily: displayFontStack, fontWeight: 700 },
-    h3: { fontFamily: displayFontStack, fontWeight: 700 },
-    h4: { fontFamily: displayFontStack, fontWeight: 600 },
-    h5: { fontFamily: displayFontStack, fontWeight: 600 },
-    h6: { fontFamily: displayFontStack, fontWeight: 600 },
-    button: { fontFamily: bodyFontStack, textTransform: 'none', fontWeight: 600 },
-  },
-  components: {
-    MuiButton: {
-      defaultProps: { disableElevation: true },
-      styleOverrides: {
-        root: { borderRadius: 3, paddingLeft: 20, paddingRight: 20 },
-        outlined: { borderWidth: '1.5px', '&:hover': { borderWidth: '1.5px' } },
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          borderRadius: 3,
-          border: `1.5px solid ${lineDark}`,
-          boxShadow: 'none',
-          backgroundImage: 'none',
-        },
-      },
-    },
-    MuiPaper: {
-      styleOverrides: {
-        root: { backgroundImage: 'none' },
-      },
-    },
-    MuiAppBar: {
-      styleOverrides: { root: { boxShadow: 'none' } },
-    },
-    MuiChip: {
-      styleOverrides: { root: { borderRadius: 3, fontWeight: 600 } },
-    },
-    MuiTextField: {
-      defaultProps: { variant: 'outlined' },
-    },
-  },
+  ...sharedThemeOptions(lineDark),
 });
