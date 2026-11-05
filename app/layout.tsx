@@ -1,17 +1,14 @@
 import type { Metadata } from 'next';
-import { Bricolage_Grotesque, Manrope, Baloo_Chettan_2 } from 'next/font/google';
+import { Plus_Jakarta_Sans, Baloo_Chettan_2 } from 'next/font/google';
 import './globals.css';
 import Providers from './providers';
 import { generatePageMetadata, generateChurchSchema } from '@/lib/seo';
 
-const displayFont = Bricolage_Grotesque({
+// One family for the whole site: light weights for headings, regular for body.
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-display',
-});
-
-const bodyFont = Manrope({
-  subsets: ['latin'],
-  variable: '--font-body',
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-jakarta',
 });
 
 const malayalamFont = Baloo_Chettan_2({
@@ -34,7 +31,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${displayFont.variable} ${bodyFont.variable} ${malayalamFont.variable}`}
+      className={`${jakarta.variable} ${malayalamFont.variable}`}
     >
       <head>
         <script

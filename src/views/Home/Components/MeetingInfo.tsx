@@ -3,42 +3,45 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { churchInfo } from '@/config/church';
-import { accent } from '@/theme/tokens';
+import SectionHeading from '@/components/Page/Components/SectionHeading';
 
 export default function MeetingInfo() {
   return (
-    <Box component="section" sx={{ py: { xs: 8, md: 12 }, backgroundColor: 'background.paper' }}>
+    <Box component="section" sx={{ py: { xs: 9, md: 12 }, backgroundColor: 'background.default' }}>
       <Container maxWidth="lg">
-        <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2, mb: 5 }}>
-          <Typography variant="h3" sx={{ fontSize: { xs: '1.9rem', md: '2.3rem' } }}>
-            Find a service that fits your week
-          </Typography>
-        </Box>
+        <SectionHeading
+          eyebrow="Through the week"
+          title="Every gathering, every week"
+          intro="Sunday is the heart of it, but the church meets to pray most days of the week."
+          action={{ label: 'See upcoming events', href: '/events' }}
+        />
 
-        <Box sx={{ borderTop: '1.5px solid', borderColor: 'divider' }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2 }}>
           {churchInfo.services.map((service) => (
             <Box
               key={service.title}
               sx={{
                 display: 'grid',
-                gridTemplateColumns: { xs: '1fr', sm: '200px 1fr' },
-                gap: { xs: 0.5, sm: 4 },
-                py: 3,
-                borderBottom: '1.5px solid',
+                gridTemplateColumns: { xs: '1fr', sm: '170px 1fr' },
+                gap: { xs: 1, sm: 3 },
+                p: { xs: 2.5, md: 3 },
+                borderRadius: '20px',
+                border: '1px solid',
                 borderColor: 'divider',
+                backgroundColor: 'background.paper',
               }}
             >
               <Box>
-                <Typography sx={{ fontWeight: 700, fontSize: '1.05rem' }}>{service.day}</Typography>
-                <Typography sx={{ color: accent, fontWeight: 600, fontSize: '0.92rem' }}>
-                  {service.time}
-                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: '0.95rem' }}>{service.day}</Typography>
+                {service.time && (
+                  <Typography sx={{ color: 'secondary.main', fontWeight: 500, fontSize: '0.88rem' }}>{service.time}</Typography>
+                )}
               </Box>
               <Box>
-                <Typography sx={{ fontWeight: 700, fontSize: '1.1rem', mb: 0.5 }}>{service.title}</Typography>
-                <Typography sx={{ color: 'text.secondary', lineHeight: 1.6, maxWidth: 560 }}>
-                  {service.description}
+                <Typography variant="h6" sx={{ fontSize: '1.08rem', mb: 0.5 }}>
+                  {service.title}
                 </Typography>
+                <Typography sx={{ color: 'text.secondary', lineHeight: 1.6, fontSize: '0.95rem' }}>{service.description}</Typography>
               </Box>
             </Box>
           ))}

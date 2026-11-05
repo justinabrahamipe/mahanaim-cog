@@ -2,87 +2,96 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Page from '@/components/Page/Page';
 import PageBanner from '@/components/Page/Components/PageBanner';
 import PageTitle from '@/components/Page/Components/PageTitle';
-import LeaderCard from './Components/LeaderCard';
+import SectionHeading from '@/components/Page/Components/SectionHeading';
+import LeaderCard, { LeaderRow } from './Components/LeaderCard';
 import { leaders } from '@/config/leaders';
 import { Leader } from '@/types';
 
-function LeaderSection({ title, members }: { title: string; members: Leader[] }) {
+const groups: { type: Leader['type']; title: string; intro: string }[] = [
+  { type: 'cpc', title: 'Church and Pastoral Committee', intro: 'Guides the life and direction of the church with the pastors.' },
+  { type: 'official', title: 'Office bearers', intro: 'Look after finance, Sunday School, youth, media, safeguarding and more.' },
+  { type: 'cell', title: 'Cell leaders', intro: 'Lead the home prayer cells in each area.' },
+];
+
+function TextGroup({ title, intro, members }: { title: string; intro: string; members: Leader[] }) {
   if (members.length === 0) return null;
 
   return (
-    <Accordion
-      defaultExpanded
-      disableGutters
+    <Box
+      component="section"
       sx={{
-        border: '1.5px solid',
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', md: '1fr 2fr' },
+        gap: { xs: 2, md: 6 },
+        py: { xs: 5, md: 7 },
+        borderTop: '1px solid',
         borderColor: 'divider',
-        borderRadius: '3px',
-        boxShadow: 'none',
-        backgroundImage: 'none',
-        mb: 3,
-        '&:before': { display: 'none' },
       }}
     >
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.main' }}>
+      <Box>
+        <Typography variant="h3" sx={{ fontSize: { xs: '1.8rem', md: '2.1rem' }, mb: 1 }}>
           {title}
         </Typography>
-      </AccordionSummary>
-      <AccordionDetails sx={{ pt: 1, pb: 4 }}>
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
-              lg: 'repeat(4, 1fr)',
-            },
-            gap: 3,
-            justifyItems: members.length < 4 ? 'center' : 'stretch',
-          }}
-        >
-          {members.map((leader) => (
-            <LeaderCard key={leader.name} leader={leader} />
-          ))}
-        </Box>
-      </AccordionDetails>
-    </Accordion>
+        <Typography sx={{ color: 'text.secondary', lineHeight: 1.6, maxWidth: 320 }}>{intro}</Typography>
+      </Box>
+      <Box
+        component="ul"
+        sx={{
+          listStyle: 'none',
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+          columnGap: 4,
+          alignContent: 'start',
+        }}
+      >
+        {members.map((leader) => (
+          <LeaderRow key={`${leader.name}-${leader.designation}`} leader={leader} />
+        ))}
+      </Box>
+    </Box>
   );
 }
 
 export default function Leadership() {
-  const pastors = leaders.filter((l) => l.type === 'pastor').sort((a, b) => a.priority - b.priority);
-  const cpcMembers = leaders.filter((l) => l.type === 'cpc').sort((a, b) => a.priority - b.priority);
-  const officials = leaders.filter((l) => l.type === 'official').sort((a, b) => a.priority - b.priority);
-  const cellLeaders = leaders.filter((l) => l.type === 'cell').sort((a, b) => a.priority - b.priority);
+  const byType = (type: Leader['type']) => leaders.filter((l) => l.type === type);
+  const pastors = byType('pastor');
 
   return (
     <Page>
       <PageBanner>
-        <PageTitle title="Leadership" subtitle="Meet the leaders who guide our church" />
+        <PageTitle title="Leadership" subtitle="The pastors and members who serve and care for our church family." />
       </PageBanner>
 
-      <Box sx={{ py: 6, backgroundColor: 'background.default' }}>
+      <Box sx={{ py: { xs: 8, md: 11 }, backgroundColor: 'background.default' }}>
         <Container maxWidth="lg">
-          <LeaderSection title="Pastoral Team" members={pastors} />
-          <LeaderSection title="Church and Pastoral Committee (CPC)" members={cpcMembers} />
-          <LeaderSection title="Office Bearers" members={officials} />
-          <LeaderSection title="Cell Leaders" members={cellLeaders} />
+          {pastors.length > 0 && (
+            <Box component="section" sx={{ mb: { xs: 8, md: 10 } }}>
+              <SectionHeading eyebrow="Shepherding the church" title="Pastoral team" />
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: { xs: '1fr 1fr', md: 'repeat(4, 1fr)', lg: `repeat(${Math.min(pastors.length, 5)}, 1fr)` },
+                  gap: { xs: 2.5, md: 3 },
+                }}
+              >
+                {pastors.map((leader) => (
+                  <LeaderCard key={leader.name} leader={leader} />
+                ))}
+              </Box>
+            </Box>
+          )}
+
+          {groups.map((group) => (
+            <TextGroup key={group.type} title={group.title} intro={group.intro} members={byType(group.type)} />
+          ))}
 
           {leaders.length === 0 && (
-            <Box sx={{ textAlign: 'center', py: 8 }}>
-              <Typography variant="h6" color="text.secondary">
-                Leadership information coming soon.
-              </Typography>
-            </Box>
+            <Typography sx={{ textAlign: 'center', py: 8, color: 'text.secondary' }}>
+              Leadership details will be added here soon.
+            </Typography>
           )}
         </Container>
       </Box>

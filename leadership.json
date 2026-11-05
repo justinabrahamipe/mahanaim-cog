@@ -3,7 +3,7 @@
     "priority": 1,
     "name": "Pr. Biju Cherian",
     "designation": "Senior Pastor",
-    "imageUrl": "/mahanaim-logo.png",
+    "imageUrl": "/leaders_photos/biju_cherian.jpg",
     "type": "pastor",
     "phone": "+447411539877",
     "whatsapp": "+447411539877",
@@ -13,14 +13,14 @@
     "priority": 2,
     "name": "Pr. Blesson Sojan",
     "designation": "Associate Pastor",
-    "imageUrl": "/mahanaim-logo.png",
+    "imageUrl": "/leaders_photos/blesson_sojan.jpg",
     "type": "pastor"
   },
   {
     "priority": 3,
     "name": "Evg. Soney C George",
     "designation": "Associate Pastor",
-    "imageUrl": "/mahanaim-logo.png",
+    "imageUrl": "/leaders_photos/soney_c_george.jpg",
     "type": "pastor"
   },
   {
@@ -34,7 +34,7 @@
     "priority": 5,
     "name": "Evg. Felix Gonsalves",
     "designation": "Associate Pastor",
-    "imageUrl": "/mahanaim-logo.png",
+    "imageUrl": "/leaders_photos/felix_gonsalves.jpg",
     "type": "pastor"
   },
   {

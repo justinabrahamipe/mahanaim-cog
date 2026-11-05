@@ -2,6 +2,7 @@
   {
     "name": "Mahanaim Church of God Manchester",
     "location": "Manchester",
+    "county": "Greater Manchester",
     "pastor": "Pr. Biju Cherian",
     "pastorPhone": "+447411539877",
     "pastorWhatsapp": "+447411539877",
@@ -19,6 +20,7 @@
   {
     "name": "Mahanaim Church of God Telford",
     "location": "Telford",
+    "county": "Shropshire",
     "pastor": "Pr. Rejoy Stephan",
     "contact": {
       "phone": "+44 7538 917310",
@@ -35,6 +37,7 @@
   {
     "name": "Mahanaim Church of God Keighley",
     "location": "Keighley",
+    "county": "West Yorkshire",
     "pastor": "Evg. Prince Varughese",
     "contact": {
       "phone": "07721545109",
@@ -48,6 +51,7 @@
   {
     "name": "Mahanaim Burnley Church of God",
     "location": "Burnley",
+    "county": "Lancashire",
     "pastor": "Evg. Ajeesh Mathew",
     "contact": {
       "phone": "+447799022048",
@@ -65,6 +69,7 @@
   {
     "name": "Mahanaim Church of God Shrewsbury",
     "location": "Shrewsbury",
+    "county": "Shropshire",
     "pastor": "Evg. Blubin John",
     "contact": {
       "phone": "+447423779816",
@@ -78,6 +83,7 @@
   {
     "name": "Mahanaim Immanuel Pentecostal Church of God Ludlow",
     "location": "Ludlow",
+    "county": "Shropshire",
     "pastor": "Evg. John K Joy",
     "contact": {
       "phone": "+447741500318",
@@ -91,12 +97,14 @@
   {
     "name": "Mahanaim Church of God Preston",
     "location": "Preston",
+    "county": "Lancashire",
     "pastor": "Evg. Allan Chacko",
     "familyPhotoStatus": null
   },
   {
     "name": "Mahanaim Church of God Bolton",
     "location": "Bolton",
+    "county": "Greater Manchester",
     "pastor": "Evg. Bino Mathew",
     "contact": {
       "phone": "07899 891863",
@@ -113,6 +121,7 @@
   {
     "name": "Mahanaim Church of God Crewe",
     "location": "Crewe",
+    "county": "Cheshire",
     "pastor": "Pr. Blesson Sojan",
     "contact": {
       "phone": "+44 7423036630",
@@ -128,12 +137,14 @@
   {
     "name": "Mahanaim Church of God Bradford",
     "location": "Bradford",
+    "county": "West Yorkshire",
     "pastor": "Evg. Prince George",
     "familyPhotoStatus": null
   },
   {
     "name": "Mahanaim Church of God Warrington",
     "location": "Warrington",
+    "county": "Cheshire",
     "pastor": "Evg. Gibin Abraham",
     "contact": {
       "phone": "+447404357921",
@@ -147,12 +158,14 @@
   {
     "name": "Mahanaim Church of God Dolgellau",
     "location": "Dolgellau, North Wales",
+    "county": "North Wales",
     "pastor": "Evg. Stanly Stephen",
     "familyPhotoStatus": null
   },
   {
     "name": "Mahanaim Church of God Bangor",
     "location": "Bangor, North Wales",
+    "county": "North Wales",
     "pastor": "Br. Johncy Koshy",
     "familyPhotoStatus": null
   }

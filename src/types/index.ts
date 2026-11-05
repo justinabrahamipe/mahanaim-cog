@@ -3,6 +3,8 @@ export interface NavItem {
   href: string;
   external?: boolean;
   children?: NavItem[];
+  // Label for a "see all" link to `href` shown at the top of the dropdown.
+  overview?: string;
 }
 
 export interface ServiceTime {
@@ -64,6 +66,7 @@ export interface ChurchContact {
 export interface SisterChurch {
   name: string;
   location: string;
+  county?: string;
   pastor: string;
   pastorPhone?: string;
   pastorWhatsapp?: string;

@@ -1,5 +1,6 @@
 import { ChurchInfo, NavItem } from '@/types';
 import churchData from '../../church.json';
+import { branchNavItems } from './churches';
 
 // Edit church.json (project root) to update church details and service times.
 export const churchInfo: ChurchInfo = churchData;
@@ -18,7 +19,7 @@ export const navItems: NavItem[] = [
       { label: 'Magazine', href: '/youth/magazine' },
     ],
   },
-  { label: 'Churches', href: '/churches' },
+  { label: 'Our branches', href: '/churches', overview: 'All branches', children: branchNavItems },
   { label: 'Leadership', href: '/leadership' },
   { label: 'Contact', href: '/contact' },
 ];
