@@ -12,11 +12,11 @@ import PageBanner from '@/components/Page/Components/PageBanner';
 import PageTitle from '@/components/Page/Components/PageTitle';
 import { Eyebrow } from '@/components/Page/Components/SectionHeading';
 import ContactLinks from '@/components/ContactLinks/ContactLinks';
-import { churches, churchSlug } from '@/config/churches';
+import { churches, churchSlug, branchPhoto, branchPhotoCredits } from '@/config/churches';
 import { churchInfo } from '@/config/church';
 import { sundayServicesInOrder } from '@/views/Home/Components/HeroSection';
 import { directionsUrl } from '@/views/Home/Components/AboutPreview';
-import { gold, wineShadow } from '@/theme/tokens';
+import { gold, wineGlowBg, wineShadow } from '@/theme/tokens';
 import type { SisterChurch } from '@/types';
 
 const ALL = 'All';
@@ -128,6 +128,8 @@ function MainChurchCard({ church }: { church: SisterChurch }) {
 
 function BranchCard({ church }: { church: SisterChurch }) {
   const slug = churchSlug(church.location);
+  const photo = branchPhoto(church.location);
+  const credit = photo ? branchPhotoCredits[slug] : undefined;
   const town = church.location.split(',')[0].trim();
   const contact = contactOf(church);
 
@@ -149,8 +151,8 @@ function BranchCard({ church }: { church: SisterChurch }) {
         '&:target': { outline: `2px solid ${gold}`, outlineOffset: 3 },
       }}
     >
-      <Box sx={{ position: 'relative', aspectRatio: '16 / 9' }}>
-        <Image src={`/branch_photos/${slug}.jpg`} alt="" fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 400px" style={{ objectFit: 'cover' }} />
+      <Box sx={{ position: 'relative', aspectRatio: '16 / 9', background: wineGlowBg }}>
+        {photo && <Image src={photo} alt="" fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 400px" style={{ objectFit: 'cover' }} />}
         <Box
           sx={{
             position: 'absolute',
@@ -158,6 +160,28 @@ function BranchCard({ church }: { church: SisterChurch }) {
             background: 'linear-gradient(to top, rgba(42, 17, 21, 0.88) 0%, rgba(42, 17, 21, 0.25) 55%, rgba(75, 30, 38, 0.15) 100%)',
           }}
         />
+        {credit && (
+          <Box
+            component="a"
+            href={credit.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              position: 'absolute',
+              top: 8,
+              right: 10,
+              px: 0.75,
+              borderRadius: '6px',
+              fontSize: '0.65rem',
+              color: 'rgba(255, 255, 255, 0.85)',
+              backgroundColor: 'rgba(42, 17, 21, 0.45)',
+              textDecoration: 'none',
+              '&:hover': { textDecoration: 'underline' },
+            }}
+          >
+            {credit.text}
+          </Box>
+        )}
         <Box sx={{ position: 'absolute', left: 20, right: 20, bottom: 14, display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 1 }}>
           <Typography component="h3" sx={{ color: '#FFFFFF', fontWeight: 400, fontSize: '1.75rem', letterSpacing: '-0.03em' }}>
             {town}

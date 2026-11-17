@@ -144,7 +144,14 @@
   },
   {
     "priority": 26,
-    "name": "Sr. Shiny Jose",
+    "name": "Sr. Suja Cherian",
+    "designation": "Ladies Coordinator",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "official"
+  },
+  {
+    "priority": 26,
+    "name": "Sr. Renju Sijo",
     "designation": "Ladies Coordinator",
     "imageUrl": "/mahanaim-logo.png",
     "type": "official"
@@ -242,50 +249,71 @@
   },
   {
     "priority": 37,
+    "name": "Br. Jickson Johnson",
+    "designation": "Wigan, Leigh & Chorley",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cell"
+  },
+  {
+    "priority": 38,
+    "name": "Br. Justin Jose",
+    "designation": "Manchester City",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cell"
+  },
+  {
+    "priority": 39,
     "name": "Br. Sonu Varghese Mathew",
     "designation": "Manchester City",
     "imageUrl": "/mahanaim-logo.png",
     "type": "cell"
   },
   {
-    "priority": 38,
-    "name": "Br. Blesson Thomas",
-    "designation": "Partington",
-    "imageUrl": "/mahanaim-logo.png",
-    "type": "cell"
-  },
-  {
-    "priority": 39,
-    "name": "Br. Noble Jacob",
-    "designation": "Clockworks",
-    "imageUrl": "/mahanaim-logo.png",
-    "type": "cell"
-  },
-  {
     "priority": 40,
-    "name": "Br. Saji Thampy",
+    "name": "Br. Saji Pulikottil",
     "designation": "Salford",
     "imageUrl": "/mahanaim-logo.png",
     "type": "cell"
   },
   {
     "priority": 41,
-    "name": "TBC",
-    "designation": "Merseyside",
+    "name": "Br. Blesson Mathew",
+    "designation": "Oldham",
     "imageUrl": "/mahanaim-logo.png",
     "type": "cell"
   },
   {
     "priority": 42,
-    "name": "Br. Jickson George",
-    "designation": "Wigan",
+    "name": "Br. Jubin Paul",
+    "designation": "Middleton",
     "imageUrl": "/mahanaim-logo.png",
     "type": "cell"
   },
   {
     "priority": 43,
-    "name": "Br. Jubin Paul",
-    "designation": "Middleton",
+    "name": "Br. Christow T Joseph",
+    "designation": "Clockworks",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cell"
+  },
+  {
+    "priority": 44,
+    "name": "Br. Blesson Thomas",
+    "designation": "Partington",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cell"
+  },
+  {
+    "priority": 45,
+    "name": "Br. John Jacob",
+    "designation": "Merseyside",
+    "imageUrl": "/mahanaim-logo.png",
+    "type": "cell"
+  },
+  {
+    "priority": 46,
+    "name": "Br. Abyson Abraham",
+    "designation": "Wythenshawe",
     "imageUrl": "/mahanaim-logo.png",
     "type": "cell"
   }

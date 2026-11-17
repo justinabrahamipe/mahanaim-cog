@@ -48,9 +48,9 @@ export function generateChurchSchema() {
     url: siteMetadata.siteUrl,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '21 Wilbraham Road',
+      streetAddress: 'Kingdom Life Church Building, 118 Chorlton Road, Old Trafford',
       addressLocality: 'Manchester',
-      postalCode: 'M14 6JS',
+      postalCode: 'M16 7WQ',
       addressCountry: 'GB',
     },
   };
