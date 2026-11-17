@@ -35,10 +35,13 @@ interface HeaderProps {
 }
 
 export function Wordmark({ size = 'md' }: { size?: 'md' | 'lg' }) {
-  const logo = size === 'lg' ? 52 : 40;
+  // Emblem only: the full logo's curved "MAHANAIM CHURCH OF GOD" lettering is navy,
+  // unreadable on the oxblood bar, and the name is set in type beside it anyway.
+  const height = size === 'lg' ? 52 : 42;
+  const width = Math.round(height * (1669 / 1967));
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
-      <Image src="/mahanaim-logo.png" alt="" width={logo} height={logo} style={{ objectFit: 'contain' }} />
+      <Image src="/mahanaim-emblem.png" alt="" width={width} height={height} style={{ objectFit: 'contain' }} />
       <Box sx={{ lineHeight: 1 }}>
         <Typography
           component="span"

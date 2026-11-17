@@ -168,5 +168,26 @@
     "county": "North Wales",
     "pastor": "Br. Johncy Koshy",
     "familyPhotoStatus": null
+  },
+  {
+    "name": "Mahanaim Church of God Liverpool",
+    "location": "Liverpool",
+    "county": "Merseyside",
+    "pastor": "Pr. Biju Cherian",
+    "contact": {
+      "phone": "+447411539877",
+      "whatsapp": "+447411539877"
+    },
+    "familyPhotoStatus": null
+  },
+  {
+    "name": "Mahanaim Church of God Lancashire",
+    "location": "Lancashire",
+    "county": "Lancashire",
+    "pastor": "Evg. John Vesly",
+    "contact": {
+      "phone": "07831 090929"
+    },
+    "familyPhotoStatus": null
   }
 ]
