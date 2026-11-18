@@ -16,7 +16,7 @@ export default function AboutPreview() {
   const branches = churches.filter((c) => !c.isMotherChurch);
   const stats = [
     { value: String(churches.length), label: 'congregations' },
-    { value: '2', label: 'languages of worship' },
+    { value: '3', label: 'languages of worship' },
   ];
 
   return (
@@ -33,7 +33,7 @@ export default function AboutPreview() {
           <Box>
             <Eyebrow>About our church</Eyebrow>
             <Typography variant="h2" sx={{ fontSize: { xs: '2.4rem', md: '3.4rem' }, mb: 3 }}>
-              One church family, two languages
+              One church family, three languages
             </Typography>
             <Typography sx={{ color: 'text.secondary', lineHeight: 1.75, fontSize: '1.05rem', mb: 2, maxWidth: 520 }}>
               {churchInfo.name} is a Pentecostal church in Manchester and part of the{' '}
@@ -43,7 +43,7 @@ export default function AboutPreview() {
               family.
             </Typography>
             <Typography sx={{ color: 'text.secondary', lineHeight: 1.75, fontSize: '1.05rem', mb: 4, maxWidth: 520 }}>
-              Every Sunday we worship in English and Malayalam, here in Manchester and with sister churches in towns
+              Every Sunday we worship in English, Malayalam and Hindi, here in Manchester and with sister churches in towns
               across England and Wales.
             </Typography>
 

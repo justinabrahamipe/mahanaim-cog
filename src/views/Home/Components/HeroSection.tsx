@@ -100,7 +100,7 @@ export default function HeroSection() {
 
         <Box sx={{ maxWidth: 560 }}>
           <Typography sx={{ fontSize: { xs: '1.02rem', md: '1.15rem' }, lineHeight: 1.65, color: onWineMuted, mb: 4 }}>
-            English and Malayalam-speaking families gather here as one congregation under Pastor{' '}
+            English, Malayalam and Hindi-speaking families gather here as one congregation under Pastor{' '}
             {churchInfo.pastor}. Come as you are.
           </Typography>
           <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap', mb: { xs: 5, md: 7 } }}>

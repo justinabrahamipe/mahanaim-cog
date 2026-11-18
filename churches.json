@@ -98,7 +98,7 @@
     "name": "Mahanaim Church of God Preston",
     "location": "Preston",
     "county": "Lancashire",
-    "pastor": "Evg. Allan Chacko",
+    "pastor": "Pr. Biju Cherian & Br. Jeffy John",
     "familyPhotoStatus": null
   },
   {
@@ -184,9 +184,10 @@
     "name": "Mahanaim Church of God Lancashire",
     "location": "Lancashire",
     "county": "Lancashire",
-    "pastor": "Evg. John Vesly",
+    "pastor": "Br. John Vesly & Br. Albin Thankachan",
     "contact": {
-      "phone": "07831 090929"
+      "phone": "07831 090929",
+      "contactNumbers": ["07831 090929", "07519 111723"]
     },
     "familyPhotoStatus": null
   }

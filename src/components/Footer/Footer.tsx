@@ -48,7 +48,7 @@ export default function Footer() {
           <Box>
             <Wordmark size="lg" />
             <Typography sx={{ color: onWineMuted, mt: 2.5, mb: 3, maxWidth: 300, lineHeight: 1.65, fontSize: '0.95rem' }}>
-              A Pentecostal church in Manchester worshipping in English and Malayalam, part of the Church of God family.
+              A Pentecostal church in Manchester worshipping in English, Malayalam and Hindi, part of the Church of God family.
             </Typography>
             <Box sx={{ display: 'flex', gap: 2.5, flexWrap: 'wrap' }}>
               {socials.map(({ label, href }) => (
