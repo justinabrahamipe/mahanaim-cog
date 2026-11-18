@@ -194,12 +194,29 @@ function BranchCard({ church }: { church: SisterChurch }) {
 
       <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', gap: 2, flexGrow: 1 }}>
         <Box>
-          <Typography sx={{ color: 'text.secondary', fontSize: '0.8rem' }}>Pastor</Typography>
+          <Typography sx={{ color: 'text.secondary', fontSize: '0.8rem' }}>Led by</Typography>
           <Typography sx={{ fontWeight: 600 }}>{church.pastor || 'To be confirmed'}</Typography>
         </Box>
         <Box sx={{ mt: 'auto' }}>
           {Object.values(contact).some(Boolean) ? (
-            <ContactLinks contact={contact} label={`${town} branch`} />
+            <>
+              <ContactLinks contact={contact} label={`${town} branch`} />
+              {/* The call button only takes one number, so list them all when there are several. */}
+              {(church.contact?.contactNumbers?.length ?? 0) > 1 && (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', columnGap: 2, mt: 1.25 }}>
+                  {church.contact!.contactNumbers!.map((number) => (
+                    <Box
+                      key={number}
+                      component="a"
+                      href={`tel:${number.replace(/\s/g, '')}`}
+                      sx={{ color: 'text.secondary', fontSize: '0.88rem', textDecoration: 'none', '&:hover': { color: 'secondary.main' } }}
+                    >
+                      {number}
+                    </Box>
+                  ))}
+                </Box>
+              )}
+            </>
           ) : (
             <Typography sx={{ color: 'text.secondary', fontSize: '0.88rem' }}>
               For details, call the Manchester church on {churchInfo.phone}
