@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { features } from '@/config/features';
 import { siteMetadata } from '@/config/seo';
 import MagazineArticleView from '@/views/Magazine/MagazineArticle';
 
@@ -20,6 +22,7 @@ export default async function MagazineArticlePage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  if (!features.magazine) notFound();
   const { slug } = await params;
   return <MagazineArticleView slug={slug} />;
 }
