@@ -1,6 +1,8 @@
 import { ChurchInfo, NavItem } from '@/types';
 import churchData from '../../church.json';
 import { branchNavItems } from './churches';
+import { features } from './features';
+import { youthQuizUrl } from './youth';
 
 // Edit church.json (project root) to update church details and service times.
 export const churchInfo: ChurchInfo = churchData;
@@ -12,11 +14,12 @@ export const navItems: NavItem[] = [
   { label: 'Gallery', href: '/gallery' },
   {
     label: 'Youth',
-    href: '/youth',
+    // With the reels page off, the quiz app is the only youth destination.
+    ...(features.youthReels ? { href: '/youth' } : { href: youthQuizUrl, external: true }),
     children: [
-      { label: 'Reels', href: '/youth' },
-      { label: 'Quiz App', href: 'https://www.mahanaimypequiz.com', external: true },
-      { label: 'Magazine', href: '/youth/magazine' },
+      ...(features.youthReels ? [{ label: 'Reels', href: '/youth' }] : []),
+      { label: 'Quiz App', href: youthQuizUrl, external: true },
+      ...(features.magazine ? [{ label: 'Magazine', href: '/youth/magazine' }] : []),
     ],
   },
   { label: 'Our branches', href: '/churches', overview: 'All branches', children: branchNavItems },

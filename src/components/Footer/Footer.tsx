@@ -79,7 +79,8 @@ export default function Footer() {
 
           <Box component="nav" aria-label="Footer">
             <ColumnHeading>Explore</ColumnHeading>
-            {navItems.map((item) => (
+            {/* Pages on this site only; off-site links (the youth quiz) live in the header menu. */}
+            {navItems.filter((item) => !item.external).map((item) => (
               <Box key={item.label} component={Link} href={item.href} sx={linkSx}>
                 {item.label}
               </Box>
